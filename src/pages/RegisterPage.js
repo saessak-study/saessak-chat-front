@@ -1,10 +1,10 @@
 import React from 'react';
-import '../style/css/registerPage.css';
+import '../style/css/registerPage.module.css';
 
 const RegisterPage = () => {
   return (
-    <div>
-      <div className='testBox'></div>
+    <div className='app'>
+      <div className='login_container'></div>
     </div>
   )
 }
