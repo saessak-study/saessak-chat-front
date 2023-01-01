@@ -1,10 +1,19 @@
 reviewers:
   defaults:
-    - dotori96
-    - Midan2047
-    - practise30
-    - Shim-sim
-    - Hayeong8957
+    - front-end
+    - back-end
+    - etc
+
+  groups:
+    front-end:
+      - DoggySummer
+      - Shim-sim
+      - Hayeon8957
+    back-end:
+      - practise30
+      - dotori96
+    etc:
+      - Midan2047
 
   options:
     enable_group_assignment: true
