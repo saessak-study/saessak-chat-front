@@ -1,20 +1,8 @@
 reviewers:
   defaults:
-    - front-end
-    - back-end
-    - etc
-
-  groups:
-    front-end:
-      - DoggySummer
-      - Shim-sim
-      - Hayeong8957
-    back-end:
-      - practise30
-      - dotori96
-    etc:
-      - Midan2047
-
-  options:
-    enable_group_assignment: true
-    number_of_reviewers: 6
+    - DoggySummer
+    - Shim-sim
+    - Hayeong8957
+    - practise30
+    - dotori96
+    - Midan2047
