@@ -1,9 +1,3 @@
-// .testBox{
-//   color:white;
-//   background-color: green;
-//   height: 300px;
-//   width: 300px;
-// }
 body {
   display: flex;
   flex-direction: column;
@@ -12,7 +6,7 @@ body {
 }
 
 .app {
-  padding: 100px 0px; /** 세로 가운데 정렬*/
+  padding: 100px 0px; 
 }
 
 .app_name {
@@ -26,50 +20,93 @@ body {
 
 .login_container {
   display: flex;
+  flex: 1;
   flex-direction: column;
+
   background-color: white;
 
   border-radius: 16px;
-  border-width: 2px;
   border-color: #707070;
   box-shadow: 13px 13px 6px 0 rgba(0, 0, 0, 0.04);
 
   width: 500px;
   height: 333px;
+
+  box-sizing: border-box;
 }
 
 .login_form {
-
+  display: flex;
+  box-sizing: border-box;
 }
 
+/** 아이디, 비밀번호 입력 & submit*/
 
 .login_submit_container{
   display: flex;
   flex-direction: row;
+  flex: 1;
 }
 
 .login_input_container {
   display: flex;
   flex-direction: column;
-  
-  width: 360px;
- 
+  flex : 0.7;
+  text-align: right;
+
+  margin: 50px 0px 40px;
+}
+
+.input_label{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.input_id{
+  margin-bottom: 25px;
 }
 
 .login_input_box{
+  border-radius: 13px;
+  border-width: 1px;
+  border-color: #707070;
+  border-width: 1px;
+  background-color: #F7F7FA;
 
+  width: 230px;
+  height: 40px;
+  align-items: flex-end;
+
+  margin-left: 10px;
 }
 
 .login_submit_btn_container{
-  width:140px;
+  display: flex;
+  flex: 0.3;
+  justify-content: space-around;
 }
 
-.horizontal_content_line_rule {
+.login_submit_btn{
+  height: 113px;
+  width: 85px;
+  margin-top: 50px;
+
+  border: none;
+  border-radius: 10px;
+  border-color: #BAD80A;
+  background-color: #BAD80A;
+
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+/** 찾기 화면 버튼*/
+.finduserinfo_btn_container{
   display: flex;
-  box-sizing: inherit;
-  margin-bottom: 24px;
-  margin-top: 24px;
+  flex: 0.3;
   align-items: center;
+  
 }
 
 hr {
@@ -105,4 +142,48 @@ hr {
 .horizontal_content_rightLine {
   flex-grow: 1;
   margin: 0;
+}
+
+.finduserinfo_btn{
+  border: 0;
+  outline: 0;
+  background-color: white;
+  text-align: center;
+
+  height: 50px;
+
+  font-size: 17px;
+  color: #707070;
+}
+
+/** 회원가입 레이아웃*/
+.register_btn_container{
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+
+  align-items: center;
+  justify-content: space-around;
+
+  box-sizing: border-box;
+  padding: 0px 50px 20px 50px;
+}
+
+.register_label{
+  font-size: 17px;
+  color: #707070;
+
+}
+
+.register_btn{
+  border: 0;
+  outline: 0;
+  background-color: white;
+  text-align: center;
+
+  height: 50px;
+
+  font-size: 17px;
+  font-weight: bold;
+  color: #707070;
 }
