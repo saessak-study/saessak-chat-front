@@ -8,7 +8,7 @@ reviewers:
     front-end:
       - DoggySummer
       - Shim-sim
-      - Hayeon8957
+      - Hayeong8957
     back-end:
       - practise30
       - dotori96
@@ -17,3 +17,4 @@ reviewers:
 
   options:
     enable_group_assignment: true
+    number_of_reviewers: 6
