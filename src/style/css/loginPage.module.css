@@ -3,7 +3,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #EEEEEF;
+  background-color: #eeeeef;
 }
 
 .app {
@@ -65,7 +65,7 @@ body {
   border-width: 1px;
   border-color: #707070;
   border-width: 1px;
-  background-color: #F7F7FA;
+  background-color: #f7f7fa;
   width: 230px;
   height: 40px;
   align-items: flex-end;
@@ -84,8 +84,8 @@ body {
   margin-top: 50px;
   border: none;
   border-radius: 10px;
-  border-color: #BAD80A;
-  background-color: #BAD80A;
+  border-color: #bad80a;
+  background-color: #bad80a;
   font-size: 18px;
   font-weight: bold;
 }
