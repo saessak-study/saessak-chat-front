@@ -1,0 +1,53 @@
+.input_container {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.input_form_box {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.input_info {
+  display: flex;
+  flex-direction: column;
+  flex: 0.7;
+  text-align: right;
+  margin: 50px 0px 40px;
+}
+.input_info input {
+  border-radius: 13px;
+  border-width: 1px;
+  border-color: #707070;
+  border-width: 1px;
+  background-color: #f7f7fa;
+  width: 230px;
+  height: 40px;
+  align-items: flex-end;
+  margin-left: 10px;
+}
+.input_info input:first-child {
+  margin-bottom: 25px;
+}
+.input_info label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.check_btn_container {
+  display: flex;
+  flex: 0.3;
+  justify-content: space-around;
+}
+.check_btn_container button {
+  height: 113px;
+  width: 85px;
+  margin-top: 50px;
+  border: none;
+  border-radius: 10px;
+  border-color: #bad80a;
+  background-color: #bad80a;
+  font-size: 18px;
+  font-weight: bold;
+}
