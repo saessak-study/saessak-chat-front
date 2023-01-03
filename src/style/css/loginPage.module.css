@@ -46,13 +46,13 @@ body {
 .login_input_container {
   display: flex;
   flex-direction: column;
-  flex: 0.7;
+  flex: 0.72;
   text-align: right;
-  margin: 50px 0px 40px;
+  margin: 50px 0px 20px;
 }
 
 .input_label {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -69,12 +69,13 @@ body {
   width: 230px;
   height: 40px;
   align-items: flex-end;
+  font-size: 20px;
   margin-left: 10px;
 }
 
 .login_submit_btn_container {
   display: flex;
-  flex: 0.3;
+  flex: 0.28;
   justify-content: space-around;
 }
 
@@ -86,8 +87,21 @@ body {
   border-radius: 10px;
   border-color: #BAD80A;
   background-color: #BAD80A;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
+}
+
+/** valid-check css*/
+.login_valid_alert_box {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+}
+
+.login_valid_alert_message {
+  font-size: 15px;
+  font-weight: bold;
+  color: red;
 }
 
 /** 찾기 화면 버튼*/
