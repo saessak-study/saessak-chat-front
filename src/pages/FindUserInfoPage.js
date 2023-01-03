@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import CommonInput from '../components/Common/CommonInput';
+import { useNavigate } from 'react-router-dom';
 import styles from '../style/css/findUserInfoPage.module.css';
 
 const FindUserInfoPage = () => {
   const [toggle, setToggle] = useState(true);
+  const navigate = useNavigate();
 
   const toggleHandler = () => {
     setToggle(!toggle);
+  };
+
+  const goToLoginPage = () => {
+    navigate(`/LoginPage`);
   };
 
   return (
@@ -30,7 +36,7 @@ const FindUserInfoPage = () => {
         ) : (
           <CommonInput topLabel="아이디" bottomLable="이메일" />
         )}
-        <div className={styles.navigate_text}>로그인 페이지로 돌아가기</div>
+        <div className={styles.navigate_text} onClick={goToLoginPage}>로그인 페이지로 돌아가기</div>
       </div>
     </div>
   );
