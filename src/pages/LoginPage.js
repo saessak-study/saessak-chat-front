@@ -81,7 +81,7 @@ const LoginPage = () => {
               className={styles.login_valid_alert_message}>
           {isAlert && !idValid && !pwValid && ID_EMPTY}
           {isAlert && idValid && !pwValid && PW_EMPTY}
-          {!isAlert && idValid && pwValid ? "" : "" }
+          {!isAlert && idValid && pwValid? "" : null }
           </span>
         </div>
 
