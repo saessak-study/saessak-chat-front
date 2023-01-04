@@ -1,7 +1,3 @@
-# Saessak-chat-front
-
-새싹 채팅 앱 프론트엔드 레포지토리
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
