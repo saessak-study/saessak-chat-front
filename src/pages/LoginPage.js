@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from "../style/css/loginPage.module.css"
 
 /** 상수값 따로 빼는 디렉토리 or 파일 생성 필요 */
@@ -39,17 +39,10 @@ const LoginPage = () => {
   }
  }
 
-  const goToRegister = () => {
-    navigate(`/RegisterPage`);
-  };
-
   const goToHome = () => {
-    navigate(`/HomePage`);
+    navigate(`/mainchat`);
   };
-
-  const goToFindUserInfo = () => {
-    navigate(`/FindUserInfoPage`)
-  };
+  
   return (
     <div className={styles.app}>
       <div className={styles.app_name}>🌱SaessakChat🌱</div>
@@ -88,14 +81,18 @@ const LoginPage = () => {
         <div className={styles.finduserinfo_btn_container}>
           <hr className={styles.horizontal_content_leftLine}/>
           <div className={styles.horizontal_content}>
-              <button className={styles.finduserinfo_btn} style={{cursor:'pointer'}} onClick={goToFindUserInfo}>아이디 or 비밀번호 찾기</button>
+              <Link to="/infoinquiry">
+                <button className={styles.finduserinfo_btn} style={{cursor:'pointer'}}>아이디 or 비밀번호 찾기</button>
+              </Link>
           </div>
           <hr className={styles.horizontal_content_rightLine}/>
         </div>
 
         <div className={styles.register_btn_container}>
           <label htmlFor="goToRegister" className={styles.register_label}>SaessakChat의 회원이 아니신가요?</label>
-          <button className={styles.register_btn} style={{cursor:'pointer'}} onClick={goToRegister}>회원가입하기</button>
+          <Link to='/registration'>
+            <button className={styles.register_btn} style={{cursor:'pointer'}}>회원가입하기</button>
+          </Link>
         </div>
       </div>
     </div>

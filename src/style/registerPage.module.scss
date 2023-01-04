@@ -1,0 +1,119 @@
+$main_green : #BAD80A;
+$main_width : 400px;
+
+.register_background{
+  background-color: #EEEEEF;
+  width: $main_width;
+}
+
+.register_title{
+  width: 420px;
+  margin : 0 auto;
+  text-align: center;
+  padding-top: 10px;
+  font-size: 20px;
+}
+.register_inputContainer{
+  width: 100%;
+}
+/** 타이핑하는 상자 생김새 */
+.register_inputPattern{
+  border : 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 20px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+}
+.register_IDBox{
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .register_inputID{
+    @extend .register_inputPattern;
+    width: 300px;
+  }
+  .register_idChk{
+    width: 90px;
+    height: 40px;
+    background-color:$main_green;
+    border: 0px;
+    border-radius: 5px;
+    margin-left: 10px;
+    font-weight: bolder;
+    font-size: 14px;
+    cursor:pointer;
+  }
+  .register_inputForm{
+    @extend .register_inputPattern; 
+    width: 100%;
+
+  }
+}
+.register_warningMSG{
+  color:red;
+  margin: 8px 0;
+  height: 22px;
+}
+.register_btn{
+  width: 100%;
+  height: 50px;
+  background-color: $main_green ;
+  font-weight: bolder;
+  font-size: 20px;
+  line-height: 50px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  border : 0;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.login_routeBtn{
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  color:#9A9A9B;
+  cursor: pointer;
+}
+.idchk_complete{
+  position: absolute;
+  background-color: #fff;
+  z-index: 10;
+  width: 400px;
+  height: 100px;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  border : 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+
+  .idButtonBox{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  // display: block none으로 조절함
+  display:none;
+}
+/** 아이디 중복확인 클릭 시 등장하는 버튼 */
+.idchk_pattern{
+  cursor: pointer;
+  border-radius: 10px; 
+  border : 0;
+  padding : 5px 10px;
+}
+.usingID{
+  @extend .idchk_pattern;
+  background-color: $main_green;
+}
+.cancelID{
+  @extend .idchk_pattern;
+  margin-left: 10px;
+  background-color: #c5c5c7;
+}
