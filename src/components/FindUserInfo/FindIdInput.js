@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../Common/css/CommonInput.module.css';
+import styles from '../FindUserInfo/css/FindIdInput.module.css';
 import Modal from './Modal';
 
 /**
@@ -7,12 +7,13 @@ import Modal from './Modal';
  * * label태그 안 children만 props로 받아오면 됨
  * TODO: Modal 수정 및 보완 필요(데이터 바인딩)
  */
-const CommonInput = ({ topLabel, bottomLable }) => {
-  const [modal, setModal] = useState(false);
-
-  const modalHandler = () => {
-    setModal(!modal);
-  };
+const CommonInput = ({
+  topLabel,
+  bottomLable,
+  modal,
+  modalHandler,
+  setModal,
+}) => {
   return (
     <div className={styles.input_container}>
       <div className={styles.input_form_box}>

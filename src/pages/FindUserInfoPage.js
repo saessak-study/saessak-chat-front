@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import CommonInput from '../components/Common/CommonInput';
+import FindIdInput from '../components/FindUserInfo/FindIdInput';
 import styles from '../style/css/findUserInfoPage.module.css';
 
 const FindUserInfoPage = () => {
   const [toggle, setToggle] = useState(true);
+  const [modal, setModal] = useState(false);
 
   const toggleHandler = () => {
     setToggle(!toggle);
+  };
+
+  const modalHandler = () => {
+    setModal(!modal);
   };
 
   return (
@@ -27,9 +32,21 @@ const FindUserInfoPage = () => {
       </div>
       <div className={styles.findIdAndPw_container}>
         {toggle ? (
-          <CommonInput topLabel="이름" bottomLable="이메일"/>
+          <FindIdInput
+            topLabel="이름"
+            bottomLable="이메일"
+            modal={modal}
+            setModal={setModal}
+            modalHandler={modalHandler}
+          />
         ) : (
-          <CommonInput topLabel="아이디" bottomLable="이메일"/>
+          <FindIdInput
+            topLabel="아이디"
+            bottomLable="이메일"
+            modal={modal}
+            setModal={setModal}
+            modalHandler={modalHandler}
+          />
         )}
         <Link to="/" style={{ textDecoration: 'none' }}>
           <div className={styles.navigate_text}>로그인 페이지로 돌아가기</div>
