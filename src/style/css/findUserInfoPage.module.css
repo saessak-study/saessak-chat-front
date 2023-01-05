@@ -75,7 +75,7 @@ body {
 .navigate_text {
   display: flex;
   align-items: center;
-  margin-top: 16px;
+  margin: 30px;
   justify-content: center;
   box-sizing: border-box;
   color: #707070;
