@@ -1,29 +1,21 @@
 import React, { useState } from 'react';
-import styles from '../FindUserInfo/css/FindIdInput.module.css';
+import styles from '../FindUserInfo/css/FindIdPwInput.module.css';
 import Modal from './Modal';
 
 /**
- * * 로그인 및 ID,PW 찾기에서 재사용 가능
- * * label태그 안 children만 props로 받아오면 됨
  * TODO: Modal 수정 및 보완 필요(데이터 바인딩)
  */
-const CommonInput = ({
-  topLabel,
-  bottomLable,
-  modal,
-  modalHandler,
-  setModal,
-}) => {
+const FindIdInput = ({ modal, modalHandler }) => {
   return (
     <div className={styles.input_container}>
       <div className={styles.input_form_box}>
         <div className={styles.input_info}>
           <label>
-            {topLabel}
+            이름
             <input />
           </label>
           <label>
-            {bottomLable}
+            이메일
             <input />
           </label>
         </div>
@@ -36,4 +28,4 @@ const CommonInput = ({
   );
 };
 
-export default CommonInput;
+export default FindIdInput;
