@@ -1,0 +1,63 @@
+$main_green : #BAD80A;
+$darkGreen : #649600;
+$background_grey : #EEEEEF;
+body{
+  margin: 0;
+  padding: 0;
+}
+.mainPage{
+  display: flex;
+  width: 100vw;
+}
+.left_container{
+  width: 30%;
+  background-color: $darkGreen;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+.main_logo{
+  color: white;
+  font-weight: bolder;
+  font-size: 40px;
+  padding: 20px 0px;
+  border-bottom: 1px solid white;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.user_container{
+  padding: 20px 0;
+}
+.user_online{
+  color: white;
+  font-size : 30px;
+  padding-bottom: 20px;
+}
+.user_status_container{
+  border-radius: 15px;
+  background-color: white;
+  padding: 20px 10px 10px 20px;
+  font-weight: bolder;
+  height: 433px;
+  .user_status{
+    padding: 5px;
+  }
+}
+.user_logout{
+  color: white;
+  padding: 30px 20px;
+  margin-left: 20px;
+  border-top: 1px solid white;
+  width: 100%;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.chatlog_container{
+  width: 80%;
+  background-color: pink;
+}
