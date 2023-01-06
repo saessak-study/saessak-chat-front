@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import FindIdInput from '../components/FindUserInfo/FindIdInput';
 import FindPwInput from '../components/FindUserInfo/FindPwInput';
 import styles from '../style/css/findUserInfoPage.module.css';
-
-const exp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+import { rEmail } from '../constants/regEx';
 
 const FindUserInfoPage = () => {
   const [inputs, setInput] = useState({
@@ -28,17 +27,26 @@ const FindUserInfoPage = () => {
     });
   };
 
+  const onReset = () => {
+    setInput({
+      checkId: '',
+      checkName: '',
+      checkEmail: '',
+    });
+  };
+
   /** 화면 전환 및 전환 시 기존데이터 초기화 */
   const IdAndPwToggleHandler = () => {
     setIdPwToggle(!idPwToggle);
     setEmailValid(false);
     setNameEmpty(false);
     setEmailEmpty(false);
+    onReset();
   };
 
   /** 이메알 유효성 검사 함수 */
   const onCheckEmailValid = () => {
-    if (exp.test(checkEmail)) {
+    if (rEmail.test(checkEmail)) {
       setModal(true);
       setEmailEmpty(false);
       setNameEmpty(false);
