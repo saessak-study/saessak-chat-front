@@ -1,40 +1,182 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import CommonInput from '../components/Common/CommonInput';
+import FindIdInput from '../components/FindUserInfo/FindIdInput';
+import FindPwInput from '../components/FindUserInfo/FindPwInput';
 import styles from '../style/css/findUserInfoPage.module.css';
+import { rEmail } from '../constants/regEx';
 
 const FindUserInfoPage = () => {
-  const [toggle, setToggle] = useState(true);
+  const [inputs, setInput] = useState({
+    checkId: '',
+    checkName: '',
+    checkEmail: '',
+  });
+  const { checkId, checkName, checkEmail } = inputs;
+  const [idEmpty, setIdEmpty] = useState(false);
+  const [nameEmpty, setNameEmpty] = useState(false);
+  const [emailEmpty, setEmailEmpty] = useState(false);
+  const [emailValid, setEmailValid] = useState(false);
+  const [idPwToggle, setIdPwToggle] = useState(true);
+  const [modal, setModal] = useState(false);
 
-  const toggleHandler = () => {
-    setToggle(!toggle);
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInput({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
+  /** 화면 전환 및 전환 시 기존데이터 초기화 */
+  const IdAndPwToggleHandler = () => {
+    setIdPwToggle(!idPwToggle);
+    setEmailValid(false);
+    setNameEmpty(false);
+    setEmailEmpty(false);
+  };
+
+  const onFindIdHandler = (e) => {
+    e.preventDefault();
+    if (!checkName && !checkEmail) {
+      setNameEmpty(true);
+      setEmailEmpty(false);
+      setEmailValid(false);
+      return;
+    }
+
+    if (!checkEmail) {
+      setEmailEmpty(true);
+      setNameEmpty(false);
+      setEmailValid(false);
+      return;
+    }
+
+    if (!checkName) {
+      setNameEmpty(true);
+      setEmailEmpty(false);
+      setEmailValid(false);
+      return;
+    }
+
+    if (checkName && checkEmail) {
+      if (rEmail.test(checkEmail)) {
+        setModal(true);
+        setEmailEmpty(false);
+        setNameEmpty(false);
+        setEmailValid(false);
+      } else {
+        setEmailValid(true);
+        setEmailEmpty(false);
+        setNameEmpty(false);
+      }
+    }
+  };
+
+  const onFindPwHandler = (e) => {
+    e.preventDefault();
+    if (!checkName && !checkEmail && !checkId) {
+      setNameEmpty(true);
+      setEmailEmpty(false);
+      setEmailValid(false);
+      setIdEmpty(false);
+      return;
+    }
+
+    if (!checkEmail) {
+      setEmailEmpty(true);
+      setNameEmpty(false);
+      setEmailValid(false);
+      setIdEmpty(false);
+      return;
+    }
+
+    if (!checkName) {
+      setNameEmpty(true);
+      setEmailEmpty(false);
+      setEmailValid(false);
+      setIdEmpty(false);
+      return;
+    }
+
+    if (!checkId) {
+      setIdEmpty(true);
+      setEmailEmpty(false);
+      setEmailValid(false);
+      setNameEmpty(false);
+      return;
+    }
+
+    if (checkName && checkEmail && checkId) {
+      if (rEmail.test(checkEmail)) {
+        setModal(true);
+        setEmailEmpty(false);
+        setNameEmpty(false);
+        setEmailValid(false);
+        setIdEmpty(false);
+      } else {
+        setEmailValid(true);
+        setEmailEmpty(false);
+        setNameEmpty(false);
+        setIdEmpty(false);
+      }
+    }
+  };
+
+  const modalHandler = () => {
+    setModal(false);
   };
 
   return (
     <div className={styles.app}>
       <div className={styles.app_name}>🌱SaessakChat🌱</div>
-      <div className={styles.findInfo_box} onClick={toggleHandler}>
+      <div className={styles.findInfo_box}>
         <div
-          className={`${toggle ? styles.findId : styles.findIdAndPw_toggle}`}
+          className={`${
+            idPwToggle ? styles.findId : styles.findIdAndPw_toggle
+          }`}
         >
-          <span>아이디 찾기</span>
+          <span onClick={idPwToggle ? null : IdAndPwToggleHandler}>
+            아이디 찾기
+          </span>
         </div>
         <div
-          className={`${toggle ? styles.findIdAndPw_toggle : styles.findPw}`}
+          className={`${
+            idPwToggle ? styles.findIdAndPw_toggle : styles.findPw
+          }`}
         >
-          <span>비밀번호 찾기</span>
+          <span onClick={idPwToggle ? IdAndPwToggleHandler : null}>
+            비밀번호 찾기
+          </span>
         </div>
       </div>
       <div className={styles.findIdAndPw_container}>
-        {toggle ? (
-          <CommonInput topLabel="이름" bottomLable="이메일"/>
+        {idPwToggle ? (
+          <FindIdInput
+            modal={modal}
+            onFindIdHandler={onFindIdHandler}
+            onChange={onChange}
+            modalHandler={modalHandler}
+            nameEmpty={nameEmpty}
+            emailEmpty={emailEmpty}
+            emailValid={emailValid}
+          />
         ) : (
-          <CommonInput topLabel="아이디" bottomLable="이메일"/>
+          <FindPwInput
+            modal={modal}
+            onFindPwHandler={onFindPwHandler}
+            onChange={onChange}
+            modalHandler={modalHandler}
+            nameEmpty={nameEmpty}
+            emailEmpty={emailEmpty}
+            emailValid={emailValid}
+            idEmpty={idEmpty}
+          />
         )}
-        <Link to="/" style={{ textDecoration: 'none' }}>
-          <div className={styles.navigate_text}>로그인 페이지로 돌아가기</div>
-        </Link>
       </div>
+
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <div className={styles.navigate_text}>로그인 페이지로 돌아가기</div>
+      </Link>
     </div>
   );
 };

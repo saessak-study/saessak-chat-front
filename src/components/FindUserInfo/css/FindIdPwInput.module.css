@@ -51,3 +51,16 @@
   font-size: 18px;
   font-weight: bold;
 }
+
+.check_valid_box {
+  display: flex;
+  justify-content: center;
+  margin-top: -32px;
+  z-index: 10;
+}
+
+.check_valid_message {
+  font-size: 15px;
+  font-weight: bold;
+  color: red;
+}
