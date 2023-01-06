@@ -21,21 +21,23 @@ const HomePage = () => {
       </div>
       <div className={styles.right_container}>
         <div className={styles.chatlog_container}>
-          <ChatLog
-            chatFromMe={true}
-            userName={'정길웅'}
-            chatMessage={'안녕하세요?'}
-          />
-          <ChatLog
-            chatFromMe={false}
-            userName={'신하영'}
-            chatMessage={'안녕하세요?'}
-          />
-          <ChatLog
-            chatFromMe={false}
-            userName={'심성보'}
-            chatMessage={'안녕하세요?'}
-          />
+          <div className={styles.chatlog_stack}>
+            <ChatLog
+              chatFromMe={true}
+              userName={'정길웅'}
+              chatMessage={'안녕하세요?'}
+            />
+            <ChatLog
+              chatFromMe={false}
+              userName={'신하영'}
+              chatMessage={'안녕하세요?'}
+            />
+            <ChatLog
+              chatFromMe={false}
+              userName={'심성보'}
+              chatMessage={'안녕하세요?'}
+            />
+          </div>
         </div>
         <div className={styles.chatInput_container}>
           <input className={styles.chatInput}></input>

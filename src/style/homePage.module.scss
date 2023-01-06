@@ -80,13 +80,15 @@ body {
   display: flex;
   flex-direction: column;
 }
-
 .chatlog_container {
   background-color: $background_grey;
   height: 80vh;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   padding-bottom: 20px;
+  overflow-y: scroll;
+  .chatlog_stack {
+  }
 }
 
 .typed_chatlog {

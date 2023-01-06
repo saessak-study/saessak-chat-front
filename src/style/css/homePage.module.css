@@ -91,10 +91,10 @@ body {
   background-color: #eeeeef;
   height: 80vh;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   padding-bottom: 20px;
+  overflow-y: scroll;
 }
-
 .typed_chatlog, .typed_chat_fromPeople, .typed_chat_fromMe {
   width: 95%;
   border-radius: 20px;
