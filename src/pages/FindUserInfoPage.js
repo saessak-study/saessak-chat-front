@@ -27,17 +27,42 @@ const FindUserInfoPage = () => {
     });
   };
 
+  const onReset = () => {
+    setInput({
+      checkId: '',
+      checkName: '',
+      checkEmail: '',
+    });
+  };
+
   /** 화면 전환 및 전환 시 기존데이터 초기화 */
   const IdAndPwToggleHandler = () => {
     setIdPwToggle(!idPwToggle);
     setEmailValid(false);
     setNameEmpty(false);
     setEmailEmpty(false);
+    onReset();
+  };
+
+  /** 이메알 유효성 검사 함수 */
+  const onCheckEmailValid = () => {
+    if (rEmail.test(checkEmail)) {
+      setModal(true);
+      setEmailEmpty(false);
+      setNameEmpty(false);
+      setEmailValid(false);
+      setIdEmpty(false);
+    } else {
+      setEmailValid(true);
+      setEmailEmpty(false);
+      setNameEmpty(false);
+      setIdEmpty(false);
+    }
   };
 
   const onFindIdHandler = (e) => {
     e.preventDefault();
-    if (!checkName && !checkEmail) {
+    if ((!checkName && !checkEmail) || !checkName) {
       setNameEmpty(true);
       setEmailEmpty(false);
       setEmailValid(false);
@@ -47,50 +72,18 @@ const FindUserInfoPage = () => {
     if (!checkEmail) {
       setEmailEmpty(true);
       setNameEmpty(false);
-      setEmailValid(false);
-      return;
-    }
-
-    if (!checkName) {
-      setNameEmpty(true);
-      setEmailEmpty(false);
       setEmailValid(false);
       return;
     }
 
     if (checkName && checkEmail) {
-      if (rEmail.test(checkEmail)) {
-        setModal(true);
-        setEmailEmpty(false);
-        setNameEmpty(false);
-        setEmailValid(false);
-      } else {
-        setEmailValid(true);
-        setEmailEmpty(false);
-        setNameEmpty(false);
-      }
+      onCheckEmailValid();
     }
   };
 
   const onFindPwHandler = (e) => {
     e.preventDefault();
-    if (!checkName && !checkEmail && !checkId) {
-      setNameEmpty(true);
-      setEmailEmpty(false);
-      setEmailValid(false);
-      setIdEmpty(false);
-      return;
-    }
-
-    if (!checkEmail) {
-      setEmailEmpty(true);
-      setNameEmpty(false);
-      setEmailValid(false);
-      setIdEmpty(false);
-      return;
-    }
-
-    if (!checkName) {
+    if ((!checkName && !checkEmail && !checkId) || !checkName) {
       setNameEmpty(true);
       setEmailEmpty(false);
       setEmailValid(false);
@@ -106,19 +99,16 @@ const FindUserInfoPage = () => {
       return;
     }
 
+    if (!checkEmail) {
+      setEmailEmpty(true);
+      setNameEmpty(false);
+      setEmailValid(false);
+      setIdEmpty(false);
+      return;
+    }
+
     if (checkName && checkEmail && checkId) {
-      if (rEmail.test(checkEmail)) {
-        setModal(true);
-        setEmailEmpty(false);
-        setNameEmpty(false);
-        setEmailValid(false);
-        setIdEmpty(false);
-      } else {
-        setEmailValid(true);
-        setEmailEmpty(false);
-        setNameEmpty(false);
-        setIdEmpty(false);
-      }
+      onCheckEmailValid();
     }
   };
 
@@ -159,6 +149,8 @@ const FindUserInfoPage = () => {
             nameEmpty={nameEmpty}
             emailEmpty={emailEmpty}
             emailValid={emailValid}
+            checkName={checkName}
+            checkEmail={checkEmail}
           />
         ) : (
           <FindPwInput
@@ -170,6 +162,9 @@ const FindUserInfoPage = () => {
             emailEmpty={emailEmpty}
             emailValid={emailValid}
             idEmpty={idEmpty}
+            checkName={checkName}
+            checkEmail={checkEmail}
+            checkId={checkId}
           />
         )}
       </div>

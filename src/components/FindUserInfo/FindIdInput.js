@@ -17,6 +17,8 @@ const FindIdInput = ({
   nameEmpty,
   emailEmpty,
   emailValid,
+  checkName,
+  checkEmail,
 }) => {
   return (
     <>
@@ -25,11 +27,11 @@ const FindIdInput = ({
           <div className={styles.input_info}>
             <label>
               이름
-              <input onChange={onChange} name="checkName" />
+              <input onChange={onChange} name="checkName" value={checkName} />
             </label>
             <label>
               이메일
-              <input onChange={onChange} name="checkEmail" />
+              <input onChange={onChange} name="checkEmail" value={checkEmail} />
             </label>
           </div>
           <div className={styles.check_btn_container}>
