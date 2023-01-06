@@ -31,15 +31,39 @@ const HomePage = () => {
         </div>
         <div className={styles.user_logout}>🚨로그아웃하기</div>
       </div>
-      <div className={styles.chatlog_container}>
-        <div className={styles.typed_chat_fromMe}>
-          <div className={styles.typed_chat_info}>
-            <div className={styles.typed_chat_name}>정길웅</div>
-            <div className={styles.typed_chat_time}>2023.01.06 (금) 오전 8시 40분</div>
+      <div className={styles.right_container}>
+        <div className={styles.chatlog_container}>
+          <div className={styles.typed_chat_fromMe}>
+            <div className={styles.typed_chat_info}>
+              <div className={styles.typed_chat_name}>정길웅</div>
+              <div className={styles.typed_chat_time}>2023.01.06 (금) 오전 8시 40분</div>
+            </div>
+            <div className={styles.typed_chat_message}>
+              안녕하세요! 혹시 고쳐야 할 UI나 추가하면 좋을 것 같은 기능도 말씀해주세요!
+            </div>
           </div>
-          <div className={styles.typed_chat_message}>
-            안녕하세요! 혹시 고쳐야 할 UI나 추가하면 좋을 것 같은 기능도 말씀해주세요!
+          <div className={styles.typed_chat_fromPeople}>
+            <div className={styles.typed_chat_info}>
+              <div className={styles.typed_chat_name}>신하영</div>
+              <div className={styles.typed_chat_time}>2023.01.06 (금) 오전 8시 40분</div>
+            </div>
+            <div className={styles.typed_chat_message}>
+              안녕하세요! 혹시 고쳐야 할 UI나 추가하면 좋을 것 같은 기능도 말씀해주세요!
+            </div>
           </div>
+          <div className={styles.typed_chat_fromPeople}>
+            <div className={styles.typed_chat_info}>
+              <div className={styles.typed_chat_name}>심성보</div>
+              <div className={styles.typed_chat_time}>2023.01.06 (금) 오전 8시 40분</div>
+            </div>
+            <div className={styles.typed_chat_message}>
+              안녕하세요! 혹시 고쳐야 할 UI나 추가하면 좋을 것 같은 기능도 말씀해주세요!
+            </div>
+          </div>
+        </div>
+        <div className={styles.chatInput_container}>
+          <input className={styles.chatInput}></input>
+          <div className={styles.chatInput_send}>전송</div>
         </div>
       </div>
     </div>
