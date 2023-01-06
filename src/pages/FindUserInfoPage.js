@@ -4,6 +4,8 @@ import FindIdInput from '../components/FindUserInfo/FindIdInput';
 import FindPwInput from '../components/FindUserInfo/FindPwInput';
 import styles from '../style/css/findUserInfoPage.module.css';
 
+const exp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
 const FindUserInfoPage = () => {
   const [inputs, setInput] = useState({
     checkId: '',
@@ -34,11 +36,25 @@ const FindUserInfoPage = () => {
     setEmailEmpty(false);
   };
 
-  const onFindIdHandler = (e) => {
-    const exp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+  /** 이메알 유효성 검사 함수 */
+  const onCheckEmailValid = () => {
+    if (exp.test(checkEmail)) {
+      setModal(true);
+      setEmailEmpty(false);
+      setNameEmpty(false);
+      setEmailValid(false);
+      setIdEmpty(false);
+    } else {
+      setEmailValid(true);
+      setEmailEmpty(false);
+      setNameEmpty(false);
+      setIdEmpty(false);
+    }
+  };
 
+  const onFindIdHandler = (e) => {
     e.preventDefault();
-    if (!checkName && !checkEmail) {
+    if ((!checkName && !checkEmail) || !checkName) {
       setNameEmpty(true);
       setEmailEmpty(false);
       setEmailValid(false);
@@ -48,52 +64,18 @@ const FindUserInfoPage = () => {
     if (!checkEmail) {
       setEmailEmpty(true);
       setNameEmpty(false);
-      setEmailValid(false);
-      return;
-    }
-
-    if (!checkName) {
-      setNameEmpty(true);
-      setEmailEmpty(false);
       setEmailValid(false);
       return;
     }
 
     if (checkName && checkEmail) {
-      if (exp.test(checkEmail)) {
-        setModal(true);
-        setEmailEmpty(false);
-        setNameEmpty(false);
-        setEmailValid(false);
-      } else {
-        setEmailValid(true);
-        setEmailEmpty(false);
-        setNameEmpty(false);
-      }
+      onCheckEmailValid();
     }
   };
 
   const onFindPwHandler = (e) => {
-    const exp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-
     e.preventDefault();
-    if (!checkName && !checkEmail && !checkId) {
-      setNameEmpty(true);
-      setEmailEmpty(false);
-      setEmailValid(false);
-      setIdEmpty(false);
-      return;
-    }
-
-    if (!checkEmail) {
-      setEmailEmpty(true);
-      setNameEmpty(false);
-      setEmailValid(false);
-      setIdEmpty(false);
-      return;
-    }
-
-    if (!checkName) {
+    if ((!checkName && !checkEmail && !checkId) || !checkName) {
       setNameEmpty(true);
       setEmailEmpty(false);
       setEmailValid(false);
@@ -109,19 +91,16 @@ const FindUserInfoPage = () => {
       return;
     }
 
+    if (!checkEmail) {
+      setEmailEmpty(true);
+      setNameEmpty(false);
+      setEmailValid(false);
+      setIdEmpty(false);
+      return;
+    }
+
     if (checkName && checkEmail && checkId) {
-      if (exp.test(checkEmail)) {
-        setModal(true);
-        setEmailEmpty(false);
-        setNameEmpty(false);
-        setEmailValid(false);
-        setIdEmpty(false);
-      } else {
-        setEmailValid(true);
-        setEmailEmpty(false);
-        setNameEmpty(false);
-        setIdEmpty(false);
-      }
+      onCheckEmailValid();
     }
   };
 
@@ -162,6 +141,8 @@ const FindUserInfoPage = () => {
             nameEmpty={nameEmpty}
             emailEmpty={emailEmpty}
             emailValid={emailValid}
+            checkName={checkName}
+            checkEmail={checkEmail}
           />
         ) : (
           <FindPwInput
@@ -173,6 +154,9 @@ const FindUserInfoPage = () => {
             emailEmpty={emailEmpty}
             emailValid={emailValid}
             idEmpty={idEmpty}
+            checkName={checkName}
+            checkEmail={checkEmail}
+            checkId={checkId}
           />
         )}
       </div>
