@@ -11,6 +11,9 @@ const FindPwInput = ({
   emailEmpty,
   emailValid,
   idEmpty,
+  checkName,
+  checkEmail,
+  checkId,
 }) => {
   return (
     <>
@@ -19,15 +22,15 @@ const FindPwInput = ({
           <div className={styles.input_info}>
             <label>
               이름
-              <input onChange={onChange} name="checkName" />
+              <input onChange={onChange} name="checkName" value={checkName} />
             </label>
             <label>
               아이디
-              <input onChange={onChange} name="checkId" />
+              <input onChange={onChange} name="checkId" value={checkId} />
             </label>
             <label>
               이메일
-              <input onChange={onChange} name="checkEmail" />
+              <input onChange={onChange} name="checkEmail" value={checkEmail} />
             </label>
           </div>
           <div className={styles.check_btn_container}>
