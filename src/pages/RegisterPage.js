@@ -17,12 +17,10 @@ const RegisterPage = () => {
         <div className={styles.register_warningMSG}>
           4~12자의 영문 대소문자와 숫자로만 입력해주세요.
         </div>
-        <RegisterInput
-          message={'8~16자의 소문자,숫자,특수문자를 사용하세요.'}
-        />
-        <RegisterInput message={'비밀번호가 일치하지 않습니다.'} />
-        <RegisterInput message={'올바른 정보를 입력해주세요.'} />
-        <RegisterInput message={'이메일 형식이 맞지 않습니다.'} />
+        <RegisterInput message={'8~16자의 소문자,숫자,특수문자를 사용하세요.'} inputType={"password"}/>
+        <RegisterInput message={'비밀번호가 일치하지 않습니다.'}  inputType={"password"} />
+        <RegisterInput message={'올바른 정보를 입력해주세요.'}  inputType={"text"}/>
+        <RegisterInput message={'이메일 형식이 맞지 않습니다.'}  inputType={"text"} />
         <div className={styles.register_btn}>회원가입</div>
         <Link to="/" style={{ textDecoration: 'none' }}>
           <div className={styles.login_routeBtn}>로그인 화면으로 돌아가기</div>

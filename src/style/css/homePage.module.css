@@ -48,6 +48,25 @@ body {
 }
 .user_status_container .user_status {
   padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.user_circle, .user_OfflineCircle, .user_OnlineCircle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-left: 10px;
+  position: absolute;
+  left: 160px;
+}
+
+.user_OnlineCircle {
+  background-color: #22ff00;
+}
+
+.user_OfflineCircle {
+  background-color: #9ea29e;
 }
 
 .user_logout {
@@ -63,13 +82,13 @@ body {
 
 .right_container {
   width: 80%;
-  background-color: #EEEEEF;
+  background-color: #eeeeef;
   display: flex;
   flex-direction: column;
 }
 
 .chatlog_container {
-  background-color: #EEEEEF;
+  background-color: #eeeeef;
   height: 80vh;
   display: flex;
   flex-direction: column-reverse;
@@ -84,7 +103,7 @@ body {
 }
 
 .typed_chat_fromMe {
-  background-color: #BAD80A;
+  background-color: #bad80a;
 }
 
 .typed_chat_fromPeople {
@@ -125,7 +144,7 @@ body {
 }
 .chatInput_container .chatInput_send {
   display: flex;
-  background-color: #BAD80A;
+  background-color: #bad80a;
   align-items: center;
   font-weight: bold;
   font-size: 30px;
@@ -133,4 +152,5 @@ body {
   margin-right: 40px;
   padding: 0 10px;
   border-radius: 20px;
+  cursor: pointer;
 }

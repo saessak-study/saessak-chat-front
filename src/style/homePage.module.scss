@@ -1,15 +1,15 @@
-$main_green : #BAD80A;
-$darkGreen : #649600;
-$background_grey : #EEEEEF;
-body{
+$main_green: #bad80a;
+$darkGreen: #649600;
+$background_grey: #eeeeef;
+body {
   margin: 0;
   padding: 0;
 }
-.mainPage{
+.mainPage {
   display: flex;
   width: 100vw;
 }
-.left_container{
+.left_container {
   width: 30%;
   background-color: $darkGreen;
   display: flex;
@@ -17,7 +17,7 @@ body{
   align-items: center;
   height: 100vh;
 }
-.main_logo{
+.main_logo {
   color: white;
   font-weight: bolder;
   font-size: 40px;
@@ -28,25 +28,43 @@ body{
   display: flex;
   flex-direction: column;
 }
-.user_container{
+.user_container {
   padding: 20px 0;
 }
-.user_online{
+.user_online {
   color: white;
-  font-size : 30px;
+  font-size: 30px;
   padding-bottom: 20px;
 }
-.user_status_container{
+.user_status_container {
   border-radius: 15px;
   background-color: white;
   padding: 20px 10px 10px 20px;
   font-weight: bolder;
   height: 430px;
-  .user_status{
+  .user_status {
     padding: 5px;
+    display: flex;
+    align-items: center;
   }
 }
-.user_logout{
+.user_circle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-left: 10px;
+  position: absolute;
+  left: 160px;
+}
+.user_OnlineCircle {
+  @extend .user_circle;
+  background-color: #22ff00;
+}
+.user_OfflineCircle {
+  @extend .user_circle;
+  background-color: #9ea29e;
+}
+.user_logout {
   color: white;
   padding: 30px 20px;
   margin-left: 20px;
@@ -56,14 +74,14 @@ body{
   font-size: 20px;
   cursor: pointer;
 }
-.right_container{
+.right_container {
   width: 80%;
   background-color: $background_grey;
   display: flex;
   flex-direction: column;
 }
 
-.chatlog_container{
+.chatlog_container {
   background-color: $background_grey;
   height: 80vh;
   display: flex;
@@ -71,43 +89,41 @@ body{
   padding-bottom: 20px;
 }
 
-.typed_chatlog{
+.typed_chatlog {
   width: 95%;
   border-radius: 20px;
   padding: 10px 0 10px 20px;
   margin: 10px auto;
 }
-.typed_chat_fromMe{
+.typed_chat_fromMe {
   background-color: $main_green;
   @extend .typed_chatlog;
 }
-.typed_chat_fromPeople{
+.typed_chat_fromPeople {
   background-color: #fff;
   @extend .typed_chatlog;
 }
 
-.typed_chat_info{
+.typed_chat_info {
   display: flex;
   align-items: baseline;
   padding-bottom: 10px;
-  .typed_chat_name{
+  .typed_chat_name {
     font-weight: bold;
   }
-  .typed_chat_time{
+  .typed_chat_time {
     color: grey;
     font-size: 8px;
     margin-left: 10px;
   }
 }
 
-
-
-.chatInput_container{
+.chatInput_container {
   background-color: $darkGreen;
   height: 20%;
   display: flex;
   align-items: center;
-  .chatInput{
+  .chatInput {
     border-radius: 15px;
     border-color: white;
     width: 85%;
@@ -116,10 +132,10 @@ body{
     padding-left: 20px;
     font-size: 20px;
   }
-  .chatInput:focus{
+  .chatInput:focus {
     outline: none;
   }
-  .chatInput_send{
+  .chatInput_send {
     display: flex;
     background-color: $main_green;
     align-items: center;
@@ -129,5 +145,6 @@ body{
     margin-right: 40px;
     padding: 0 10px;
     border-radius: 20px;
+    cursor: pointer;
   }
 }

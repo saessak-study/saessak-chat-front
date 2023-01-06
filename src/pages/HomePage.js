@@ -1,4 +1,6 @@
 import React from 'react';
+import ChatLog from '../components/HomePage/ChatLog';
+import ChkUserOnline from '../components/HomePage/ChkUserOnline';
 import styles from '../style/css/homePage.module.css';
 
 const HomePage = () => {
@@ -7,59 +9,33 @@ const HomePage = () => {
       <div className={styles.left_container}>
         <div className={styles.main_logo}>🌱SaessakChat🌱</div>
         <div className={styles.user_container}>
-          <div className={styles.user_online}>🙌현재 접속중인 유저</div>
+          <div className={styles.user_online}>🖐현재 접속중인 유저</div>
           <div className={styles.user_status_container}>
-            <div className={styles.user_status}>
-              <div>유저1 🟢</div>
-            </div>
-            <div className={styles.user_status}>
-              <div>유저2 ⚫</div>
-            </div>
-            <div className={styles.user_status}>
-              <div>유저1 🟢</div>
-            </div>
-            <div className={styles.user_status}>
-              <div>유저2 ⚫</div>
-            </div>
-            <div className={styles.user_status}>
-              <div>유저1 🟢</div>
-            </div>
-            <div className={styles.user_status}>
-              <div>유저2 ⚫</div>
-            </div>
+            <ChkUserOnline userName={'정길웅'} userOnline={true} />
+            <ChkUserOnline userName={'박아연'} userOnline={false} />
+            <ChkUserOnline userName={'김필'} userOnline={false} />
+            <ChkUserOnline userName={'가나다라'} userOnline={false} />
           </div>
         </div>
-        <div className={styles.user_logout}>🚨로그아웃하기</div>
+        <div className={styles.user_logout}>🚪로그아웃하기</div>
       </div>
       <div className={styles.right_container}>
         <div className={styles.chatlog_container}>
-          <div className={styles.typed_chat_fromMe}>
-            <div className={styles.typed_chat_info}>
-              <div className={styles.typed_chat_name}>정길웅</div>
-              <div className={styles.typed_chat_time}>2023.01.06 (금) 오전 8시 40분</div>
-            </div>
-            <div className={styles.typed_chat_message}>
-              안녕하세요! 혹시 고쳐야 할 UI나 추가하면 좋을 것 같은 기능도 말씀해주세요!
-            </div>
-          </div>
-          <div className={styles.typed_chat_fromPeople}>
-            <div className={styles.typed_chat_info}>
-              <div className={styles.typed_chat_name}>신하영</div>
-              <div className={styles.typed_chat_time}>2023.01.06 (금) 오전 8시 40분</div>
-            </div>
-            <div className={styles.typed_chat_message}>
-              안녕하세요! 혹시 고쳐야 할 UI나 추가하면 좋을 것 같은 기능도 말씀해주세요!
-            </div>
-          </div>
-          <div className={styles.typed_chat_fromPeople}>
-            <div className={styles.typed_chat_info}>
-              <div className={styles.typed_chat_name}>심성보</div>
-              <div className={styles.typed_chat_time}>2023.01.06 (금) 오전 8시 40분</div>
-            </div>
-            <div className={styles.typed_chat_message}>
-              안녕하세요! 혹시 고쳐야 할 UI나 추가하면 좋을 것 같은 기능도 말씀해주세요!
-            </div>
-          </div>
+          <ChatLog
+            chatFromMe={true}
+            userName={'정길웅'}
+            chatMessage={'안녕하세요?'}
+          />
+          <ChatLog
+            chatFromMe={false}
+            userName={'신하영'}
+            chatMessage={'안녕하세요?'}
+          />
+          <ChatLog
+            chatFromMe={false}
+            userName={'심성보'}
+            chatMessage={'안녕하세요?'}
+          />
         </div>
         <div className={styles.chatInput_container}>
           <input className={styles.chatInput}></input>
@@ -68,6 +44,14 @@ const HomePage = () => {
       </div>
     </div>
   );
+};
+
+/**
+ * TODO 채팅을 쳐서 채팅로그로 보내는 함수 만들기
+ * @param {e} e
+ */
+const inputToChatlog = (e) => {
+  console.log(e.target.value);
 };
 
 export default HomePage;
