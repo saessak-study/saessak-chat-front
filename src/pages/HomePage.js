@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ChatLog from '../components/HomePage/ChatLog';
 import ChkUserOnline from '../components/HomePage/ChkUserOnline';
 import styles from '../style/css/homePage.module.css';
+import chatlog from '../constants/chatlog.json';
 
 const HomePage = () => {
+  const [chatMessage, setChatMessage] = useState('');
+  const [user, setUser] = useState('');
+  const [chatFromMe, setChatFromMe] = useState(false);
+
+  const inputChange = (e, chatMessage, user) => {
+    setChatMessage(e.target.value);
+    console.log(chatlog);
+  };
+  const inputToLog = () => {};
+
   return (
     <div className={styles.mainPage}>
       <div className={styles.left_container}>
@@ -21,39 +32,28 @@ const HomePage = () => {
       </div>
       <div className={styles.right_container}>
         <div className={styles.chatlog_container}>
-          <div className={styles.chatlog_stack}>
-            <ChatLog
-              chatFromMe={true}
-              userName={'정길웅'}
-              chatMessage={'안녕하세요?'}
-            />
-            <ChatLog
-              chatFromMe={false}
-              userName={'신하영'}
-              chatMessage={'안녕하세요?'}
-            />
-            <ChatLog
-              chatFromMe={false}
-              userName={'심성보'}
-              chatMessage={'안녕하세요?'}
-            />
+          <div className={styles.chatlog_stack} id="chatlog_stack">
+            {chatlog.map((chat, i) => {
+              return (
+                <ChatLog
+                  key={i}
+                  chatFromMe={chat.chatFromMe}
+                  userName={chat.userName}
+                  chatMessage={chat.chatMessage}
+                />
+              );
+            })}
           </div>
         </div>
         <div className={styles.chatInput_container}>
-          <input className={styles.chatInput}></input>
-          <div className={styles.chatInput_send}>전송</div>
+          <input className={styles.chatInput} onChange={inputChange}></input>
+          <div className={styles.chatInput_send} onClick={inputToLog}>
+            전송
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
-/**
- * TODO 채팅을 쳐서 채팅로그로 보내는 함수 만들기
- * @param {e} e
- */
-const inputToChatlog = (e) => {
-  console.log(e.target.value);
 };
 
 export default HomePage;
