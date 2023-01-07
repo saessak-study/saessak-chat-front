@@ -31,6 +31,7 @@ $main_width: 400px;
   width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
   .register_inputID {
     @extend .register_inputPattern;
     width: 300px;

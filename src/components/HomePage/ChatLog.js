@@ -1,8 +1,7 @@
 import React from 'react';
 import styles from '../../style/css/homePage.module.css';
 
-const ChatLog = ({ chatFromMe, userName, chatMessage }) => {
-  const chatDate = new Date();
+const ChatLog = ({ chatFromMe, userName, chatMessage, chatDate }) => {
   return (
     <div>
       <div
@@ -14,9 +13,7 @@ const ChatLog = ({ chatFromMe, userName, chatMessage }) => {
       >
         <div className={styles.typed_chat_info}>
           <div className={styles.typed_chat_name}>{userName}</div>
-          <div className={styles.typed_chat_time}>
-            {chatDate.toLocaleString()}
-          </div>
+          <div className={styles.typed_chat_time}>{chatDate}</div>
         </div>
         <div className={styles.typed_chat_message}>{chatMessage}</div>
       </div>

@@ -9,12 +9,16 @@ const HomePage = () => {
   const [user, setUser] = useState('');
   const [chatFromMe, setChatFromMe] = useState(false);
 
+  /**
+   * ^채팅창에 적은 글을 state에 저장하는 함수
+   * @param {e} e
+   * @param {string} chatMessage
+   * @param {string} user
+   */
   const inputChange = (e, chatMessage, user) => {
     setChatMessage(e.target.value);
     console.log(chatlog);
   };
-  const inputToLog = () => {};
-
   return (
     <div className={styles.mainPage}>
       <div className={styles.left_container}>
@@ -34,12 +38,14 @@ const HomePage = () => {
         <div className={styles.chatlog_container}>
           <div className={styles.chatlog_stack} id="chatlog_stack">
             {chatlog.map((chat, i) => {
+              const chatDate = new Date().toLocaleString();
               return (
                 <ChatLog
                   key={i}
                   chatFromMe={chat.chatFromMe}
                   userName={chat.userName}
                   chatMessage={chat.chatMessage}
+                  chatDate={chatDate}
                 />
               );
             })}
@@ -47,9 +53,7 @@ const HomePage = () => {
         </div>
         <div className={styles.chatInput_container}>
           <input className={styles.chatInput} onChange={inputChange}></input>
-          <div className={styles.chatInput_send} onClick={inputToLog}>
-            전송
-          </div>
+          <div className={styles.chatInput_send}>전송</div>
         </div>
       </div>
     </div>

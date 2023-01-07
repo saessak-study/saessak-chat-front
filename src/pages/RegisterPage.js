@@ -18,14 +18,33 @@ const RegisterPage = () => {
       </div>
       <div className={styles.register_inputContainer}>
         <div className={styles.register_IDBox}>
-          <input className={styles.register_inputID}></input>
+          <input
+            className={styles.register_inputID}
+            placeholder={'아이디'}
+          ></input>
           <button className={styles.register_idChk}>중복검사</button>
         </div>
         <div className={styles.register_warningMSG}>{ID_VALID_CHECK}</div>
-        <RegisterInput message={PW_VALID_CHECK} />
-        <RegisterInput message={PW_INVALID} />
-        <RegisterInput message={INFO_INVALID} />
-        <RegisterInput message={EMAIL_INVALID} />
+        <RegisterInput
+          message={PW_VALID_CHECK}
+          inputType={'password'}
+          placeholder={'비밀번호'}
+        />
+        <RegisterInput
+          message={PW_INVALID}
+          inputType={'password'}
+          placeholder={'비밀번호 확인'}
+        />
+        <RegisterInput
+          message={INFO_INVALID}
+          inputType={'text'}
+          placeholder={'이름'}
+        />
+        <RegisterInput
+          message={EMAIL_INVALID}
+          inputType={'text'}
+          placeholder={'이메일'}
+        />
         <div className={styles.register_btn}>회원가입</div>
         <Link to="/" style={{ textDecoration: 'none' }}>
           <div className={styles.login_routeBtn}>로그인 화면으로 돌아가기</div>
