@@ -12,72 +12,83 @@ import {
 import { rEmail, rPassword, rId } from '../constants/regEx';
 
 const RegisterPage = () => {
-  const [inputs, setInput] = useState({
-    checkId: '',
-    checkPassword: '',
-    checkName: '',
-    checkEmail: '',
-  });
-  const { checkId, checkPassword, checkName, checkEmail } = inputs;
   const [idValid, setidValid] = useState(false);
-  const [nameEmpty, setNameEmpty] = useState(false);
-  const [emailEmpty, setEmailEmpty] = useState(false);
+  const [nameEmpty, setNameEmpty] = useState(true);
   const [emailValid, setEmailValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
-  const [pwEmpty, setPwEmpty] = useState(false);
-
+  const [pwSame, SetPwSame] = useState(false);
   /**
-   * ^인풋값이 바뀔 때마다 state값 변화시켜주는 함수 */
-  const onChange = (e) => {
-    const { value, name } = e.target;
-    setInput({
-      ...inputs,
-      [name]: value,
-    });
-  };
-  /**
-   * ^아이디가 validity를 통과하지 못한다면 alert를 뱉는 함수 */
+   * &아이디가 validity를 통과하지 못한다면 alert를 뱉는 함수 */
   const checkingID = () => {
-    if (rId.test(inputs.checkId)) {
+    let id_Valid = document.getElementById('id_Valid').value;
+    if (rId.test(id_Valid)) {
       alert('사용가능한 아이디입니다');
       setidValid(true);
+      document.getElementById('id_ValidMSG').innerHTML = '';
     } else {
       alert('사용할 수 없는 아이디입니다');
       setidValid(false);
+      document.getElementById('id_ValidMSG').innerHTML = ID_VALID_CHECK;
     }
   };
   /**
-   * ^비밀번호의 validity 검사하는 함수 */
+   * &비밀번호의 validity 검사하는 함수 */
   const checkingPW = () => {
-    if (rPassword.test(inputs.checkPassword)) {
+    let pw_origin = document.getElementById('pw_Valid').value;
+    if (rPassword.test(pw_origin)) {
       setPwValid(true);
+      document.getElementById('pw_ValidMSG').innerHTML = '';
     } else {
       setPwValid(false);
+      document.getElementById('pw_ValidMSG').innerHTML = PW_VALID_CHECK;
     }
   };
   /**
-   * ^비밀번호와 비밀번호 확인 값이 같은지 확인하는 함수 */
+   * &비밀번호와 비밀번호 확인 값이 같은지 확인하는 함수 */
   const checkingPW_invalid = () => {
     let pw_origin = document.getElementById('pw_Valid').value;
     let pw_same = document.getElementById('pw_invalid').value;
-    pw_origin == pw_same ? setPwValid(true) : setPwValid(false);
+    pw_origin == pw_same ? SetPwSame(true) : SetPwSame(false);
   };
   /**
-   * ^이메일 validity 검사하는 함수 */
-  const checkingEmail = () => {
-    if (rEmail.test(inputs.checkEmail)) {
-      setEmailValid(true);
+   * &이름이 공란인지 확인해주는 함수 */
+  const checkingName = () => {
+    let name_valid = document.getElementById('name_valid').value;
+    if (name_valid == '') {
+      setNameEmpty(true);
+      document.getElementById('name_validMSG').innerHTML = INFO_INVALID;
     } else {
-      setEmailValid(false);
+      setNameEmpty(false);
+      document.getElementById('name_validMSG').innerHTML = '';
     }
   };
   /**
-   * ^ghldnjsrkdlq
-   */
-  const finalChk = () => {
-    if (pwValid == false) {
-      return;
+   * &이메일 validity 검사하는 함수 */
+  const checkingEmail = () => {
+    let email_valid = document.getElementById('email_valid').value;
+    if (rEmail.test(email_valid)) {
+      setEmailValid(true);
+      document.getElementById('email_validMSG').innerHTML = '';
     } else {
+      setEmailValid(false);
+      document.getElementById('email_validMSG').innerHTML = EMAIL_INVALID;
+    }
+  };
+  /**
+   * &마지막으로 점검하는 함수 */
+  const finalChk = () => {
+    if (idValid == false) {
+      alert('아이디 중복확인을 클릭해주세요');
+    } else if (pwValid == false) {
+      alert('비밀번호를 입력해 주세요');
+    } else if (pwSame == false) {
+      alert('비밀번호가 일치하지 않습니다');
+    } else if (nameEmpty == true) {
+      alert('이름에 공란이 있습니다.');
+    } else if (emailValid == false) {
+      alert('이메일 형식이 올바르지 않습니다.');
+    } else {
+      alert('회원가입이 완료되었습니다!');
     }
   };
   return (
@@ -89,45 +100,57 @@ const RegisterPage = () => {
         <div className={styles.register_inputContainer}>
           <div className={styles.register_IDBox}>
             <input
+              id={'id_Valid'}
               name="checkId"
               className={styles.register_inputID}
               placeholder={'아이디'}
-              onChange={onChange}
             ></input>
-            <button className={styles.register_idChk}>중복검사</button>
+            <button className={styles.register_idChk} onClick={checkingID}>
+              중복검사
+            </button>
           </div>
-          <div className={styles.register_warningMSG}>{ID_VALID_CHECK}</div>
+          <div className={styles.register_warningMSG} id={'id_ValidMSG'}>
+            {ID_VALID_CHECK}
+          </div>
           <RegisterInput
-            inputID={'pw_Valid'}
+            inputid={'pw_Valid'}
             name={'pw_Valid'}
+            messageID={'pw_ValidMSG'}
             message={PW_VALID_CHECK}
             inputType={'password'}
             placeholder={'비밀번호'}
+            onChange={checkingPW}
           />
           <RegisterInput
-            inputID={'pw_invalid'}
+            inputid={'pw_invalid'}
             name={'pw_invalid'}
             message={PW_INVALID}
+            messageID={'pw_invalidMSG'}
             inputType={'password'}
             placeholder={'비밀번호 확인'}
+            onChange={checkingPW_invalid}
           />
           <RegisterInput
-            inputID={'name_valid'}
+            inputid={'name_valid'}
             name={'name_valid'}
             message={INFO_INVALID}
+            messageID={'name_validMSG'}
             inputType={'text'}
             placeholder={'이름'}
-            onChange={onChange}
+            onChange={checkingName}
           />
           <RegisterInput
-            inputID={'email_valid'}
+            inputid={'email_valid'}
             name={'email_valid'}
             message={EMAIL_INVALID}
+            messageID={'email_validMSG'}
             inputType={'text'}
             placeholder={'이메일'}
-            onChange={onChange}
+            onChange={checkingEmail}
           />
-          <div className={styles.register_btn}>회원가입</div>
+          <div className={styles.register_btn} onClick={finalChk}>
+            회원가입
+          </div>
           <Link to="/" style={{ textDecoration: 'none' }}>
             <div className={styles.login_routeBtn}>
               로그인 화면으로 돌아가기

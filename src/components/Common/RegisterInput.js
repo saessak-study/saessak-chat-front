@@ -2,18 +2,19 @@ import React from 'react';
 import styles from '../../style/css/registerPage.module.css';
 
 const RegisterInput = ({
-  inputID,
+  inputid,
   message,
   inputType,
   placeholder,
   onChange,
   name,
+  messageID,
 }) => {
   return (
     <div>
       <div className={styles.register_IDBox}>
         <input
-          id={inputID}
+          id={inputid}
           className={styles.register_inputForm}
           type={inputType}
           placeholder={placeholder}
@@ -21,7 +22,9 @@ const RegisterInput = ({
           name={name}
         ></input>
       </div>
-      <div className={styles.register_warningMSG}>{message}</div>
+      <div className={styles.register_warningMSG} id={messageID}>
+        {message}
+      </div>
     </div>
   );
 };
