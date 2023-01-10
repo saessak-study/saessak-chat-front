@@ -1,4 +1,12 @@
 @charset "UTF-8";
+.register_wholesome {
+  width: 100vw;
+  height: 100vh;
+  background-color: #eeeeef;
+  display: flex;
+  justify-content: center;
+}
+
 .register_background {
   background-color: #eeeeef;
   width: 400px;
@@ -32,6 +40,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 .register_IDBox .register_inputID {
   width: 300px;
