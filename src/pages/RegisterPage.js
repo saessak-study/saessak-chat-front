@@ -48,7 +48,13 @@ const RegisterPage = () => {
   const checkingPW_invalid = () => {
     let pw_origin = document.getElementById('pw_Valid').value;
     let pw_same = document.getElementById('pw_invalid').value;
-    pw_origin == pw_same ? SetPwSame(true) : SetPwSame(false);
+    if (pw_origin == pw_same) {
+      document.getElementById('pw_invalidMSG').innerHTML = '';
+      SetPwSame(true);
+    } else {
+      document.getElementById('pw_invalidMSG').innerHTML = PW_INVALID;
+      SetPwSame(false);
+    }
   };
   /**
    * &이름이 공란인지 확인해주는 함수 */
