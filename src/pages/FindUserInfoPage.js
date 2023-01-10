@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FindIdInput from '../components/FindUserInfo/FindIdInput';
 import FindPwInput from '../components/FindUserInfo/FindPwInput';
 import styles from '../style/css/findUserInfoPage.module.css';
 import { rEmail } from '../constants/regEx';
+import axios from 'axios';
 
 const FindUserInfoPage = () => {
   const [inputs, setInput] = useState({
@@ -33,6 +34,57 @@ const FindUserInfoPage = () => {
       checkName: '',
       checkEmail: '',
     });
+  };
+
+  /** 아이디 찾기 api */
+  const getFindId = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        '',
+        {
+          name: checkName,
+          email: checkEmail,
+        },
+        {
+          headers: {
+            'Content-type': 'application/json',
+          },
+        },
+      )
+      .then((res) => {
+        alert({ res });
+      })
+      .catch((error) => {
+        console.log(error.res);
+        alert('없는 회원');
+      });
+  };
+
+  /** 비밀번호 찾기 api */
+  const getFindPw = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        '',
+        {
+          name: checkName,
+          email: checkEmail,
+          id: checkId,
+        },
+        {
+          headers: {
+            'Content-type': 'application/json',
+          },
+        },
+      )
+      .then((res) => {
+        alert({ res });
+      })
+      .catch((error) => {
+        console.log(error.res);
+        alert('없는 회원');
+      });
   };
 
   /** 화면 전환 및 전환 시 기존데이터 초기화 */
@@ -78,6 +130,7 @@ const FindUserInfoPage = () => {
 
     if (checkName && checkEmail) {
       onCheckEmailValid();
+      getFindId();
     }
   };
 
@@ -109,6 +162,7 @@ const FindUserInfoPage = () => {
 
     if (checkName && checkEmail && checkId) {
       onCheckEmailValid();
+      getFindPw();
     }
   };
 
