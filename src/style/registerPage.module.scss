@@ -1,8 +1,16 @@
 $main_green: #bad80a;
 $main_width: 400px;
-
+$main_background: #eeeeef;
+$overlay_color: rgba(0, 0, 0, 0.5);
+.register_wholesome {
+  width: 100vw;
+  height: 100vh;
+  background-color: $main_background;
+  display: flex;
+  justify-content: center;
+}
 .register_background {
-  background-color: #eeeeef;
+  background-color: $main_background;
   width: $main_width;
 }
 
@@ -31,6 +39,7 @@ $main_width: 400px;
   width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
   .register_inputID {
     @extend .register_inputPattern;
     width: 300px;
