@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import FindIdInput from '../components/FindUserInfo/FindIdInput';
 import FindPwInput from '../components/FindUserInfo/FindPwInput';
 import styles from '../style/css/findUserInfoPage.module.css';
-import { rEmail } from '../constants/regEx';
-
-const exp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+import { regEmail } from '../constants/regEx';
 
 const FindUserInfoPage = () => {
   const [inputs, setInput] = useState({
@@ -48,7 +46,7 @@ const FindUserInfoPage = () => {
 
   /** 이메알 유효성 검사 함수 */
   const onCheckEmailValid = () => {
-    if (rEmail.test(checkEmail)) {
+    if (regEmail.test(checkEmail)) {
       setModal(true);
       setEmailEmpty(false);
       setNameEmpty(false);
