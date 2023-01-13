@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import FindIdInput from '../components/FindUserInfo/FindIdInput';
 import FindPwInput from '../components/FindUserInfo/FindPwInput';
 import styles from '../style/css/findUserInfoPage.module.css';
-import { rEmail } from '../constants/regEx';
+import { regEmail } from '../constants/regEx';
 import axios from 'axios';
 
 const FindUserInfoPage = () => {
@@ -98,7 +98,7 @@ const FindUserInfoPage = () => {
 
   /** 이메알 유효성 검사 함수 */
   const onCheckEmailValid = () => {
-    if (rEmail.test(checkEmail)) {
+    if (regEmail.test(checkEmail)) {
       setModal(true);
       setEmailEmpty(false);
       setNameEmpty(false);
