@@ -14,6 +14,8 @@ const FindPwInput = ({
   checkName,
   checkEmail,
   checkId,
+  modalMessage,
+  modalFor,
 }) => {
   return (
     <>
@@ -37,7 +39,12 @@ const FindPwInput = ({
             <button onClick={onFindPwHandler}>확인</button>
           </div>
         </div>
-        <Modal modalHandler={modalHandler} modal={modal} />
+        <Modal
+          modalHandler={modalHandler}
+          modal={modal}
+          modalMessage={modalMessage}
+          modalFor={modalFor}
+        />
       </div>
       <div className={styles.check_valid_box}>
         <span className={styles.check_valid_message}>

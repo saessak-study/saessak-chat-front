@@ -1,13 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ChatLog from '../components/HomePage/ChatLog';
 import ChkUserOnline from '../components/HomePage/ChkUserOnline';
 import styles from '../style/css/homePage.module.css';
 import chatlog from '../constants/chatlog.json';
+import history from '../utils/history';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const userId = location.state.id;
+  const userName = location.state.name;
+  console.log('아이디', userId);
+  console.log('이름', userName);
+  const [isBlocking, setIsBlocking] = useState(false);
+
   const [chatMessage, setChatMessage] = useState('');
   const [user, setUser] = useState('');
   const [chatFromMe, setChatFromMe] = useState(false);
+
+  /** 뒤로가기 -> 로그아웃 */
+  useEffect(() => {
+    const goToBackEvent = () => {
+      if (
+        window.confirm(
+          '페이지를 벗어나면 로그아웃됩니다. 정말 페이지를 나가시겠습니까?',
+        )
+      ) {
+        localStorage.clear();
+        window.location.replace('http://localhost:3000/');
+      }
+    };
+    const historyEvent = history.listen(({ action }) => {
+      if (action === 'POP') {
+        goToBackEvent();
+      }
+    });
+    return historyEvent;
+  });
 
   /**
    * ^채팅창에 적은 글을 state에 저장하는 함수

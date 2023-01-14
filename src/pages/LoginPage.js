@@ -1,8 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../style/css/loginPage.module.css';
-import { ID_EMPTY, PW_EMPTY, PW_WRONG, NO_USER } from '../constants/message';
+import { ID_EMPTY, PW_EMPTY } from '../constants/message';
+import axios from 'axios';
+import { regPassword, regId } from '../constants/regEx';
 
 const LoginPage = () => {
   const [inputs, setInputs] = useState({
@@ -15,6 +17,7 @@ const LoginPage = () => {
   const [isAlert, setIsAlert] = useState(false);
   const navigate = useNavigate();
 
+  /** input 관리 */
   const onChangeInputs = (e) => {
     const { value, name } = e.target;
     setInputs({
@@ -23,26 +26,74 @@ const LoginPage = () => {
     });
   };
 
+  useEffect(() => {
+    if (regId.test(userId) && userId) setIdValid(true);
+    if (regPassword.test(userPw) && userPw) setpwValid(true);
+    if (!regId.test(userId) || !userId) setIdValid(false);
+    if (!regPassword.test(userPw) || !userPw) setpwValid(false);
+  }, [userId, userPw]);
+
+  /** login버튼 누를 시 유효성 검사 */
   const loginBtnAction = (e) => {
     e.preventDefault();
-    if ((!userId && !userPw) || !userId) {
+    if (!idValid) {
       setIsAlert(true);
-      setIdValid(false);
-      setpwValid(false);
-    } else if (!userPw) {
+    } else if (!pwValid) {
       setIsAlert(true);
-      setIdValid(true);
-      setpwValid(false);
     } else {
       setIsAlert(false);
-      setIdValid(true);
-      setpwValid(true);
-      goToHome();
+      gotohome();
     }
   };
 
-  const goToHome = () => {
-    navigate(`/mainchat`);
+  /** localStorage 확인용 코드 -> 지울것  */
+  const gotohome = () => {
+    navigate('/mainchat', {
+      state: {
+        before: '/',
+        id: userId,
+      },
+    });
+    localStorage.setItem('id', userId);
+  };
+
+  /** API -> form태그 onsubmit에 적용
+   * package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
+   * 서버 url : http://35.216.19.135:8080/login
+   */
+  const handleSubmit = async () => {
+    if (idValid && pwValid) {
+      await axios
+        .get('/login', {
+          params: {
+            id: userId,
+            password: userPw,
+          },
+          withCredentials: true,
+          headers: {
+            'Content-type': 'application/json',
+          },
+        })
+        .then((response) => {
+          alert(response.message);
+          /** 브라우저에 id 저장 */
+          localStorage.clear();
+          localStorage.setItem('id', userId);
+          /** 성공 시 response로 mainchat으로 넘겨짐(정보들과 함께) */
+          navigate('/mainchat', {
+            state: {
+              before: '/',
+              id: userId,
+            },
+          });
+        })
+        .catch((error) => {
+          // 에러 핸들링
+          console.log(error.response);
+          console.log('Error: ', error.message);
+          alert(error.message);
+        });
+    }
   };
 
   return (
@@ -50,7 +101,11 @@ const LoginPage = () => {
       <div className={styles.app_name}>🌱SaessakChat🌱</div>
 
       <div className={styles.login_container}>
-        <form noValidate="" className={styles.login_form}>
+        <form
+          noValidate=""
+          className={styles.login_form}
+          onSubmit={handleSubmit}
+        >
           <div className={styles.login_submit_container}>
             <div className={styles.login_input_container}>
               <div className={styles.input_id}>
