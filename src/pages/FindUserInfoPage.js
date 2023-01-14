@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import FindIdInput from '../components/FindUserInfo/FindIdInput';
 import FindPwInput from '../components/FindUserInfo/FindPwInput';
@@ -20,6 +20,15 @@ const FindUserInfoPage = () => {
   const [idPwToggle, setIdPwToggle] = useState(true);
   const [modal, setModal] = useState(false);
 
+  /** api요청으로 받아올 데이터 */
+
+  const [returnId, setReturnId] = useState('shy8957');
+  const [returnPw, setReturnPw] = useState('qwer1234!');
+
+  /** 현재 어떤걸 찾는 모달창인지 알아야 함 */
+  const modalForId = 'id';
+  const modalForPw = 'password';
+
   const onChange = (e) => {
     const { value, name } = e.target;
     setInput({
@@ -37,53 +46,59 @@ const FindUserInfoPage = () => {
   };
 
   /** 아이디 찾기 api */
-  const getFindId = (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        '',
-        {
-          name: checkName,
+  /** API
+   * package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
+   * 서버 url : http://35.216.19.135:8080/find-id
+   */
+  const getFindId = async () => {
+    setReturnId('');
+    await axios
+      .get('/find-id', {
+        params: {
           email: checkEmail,
+          name: checkName,
         },
-        {
-          headers: {
-            'Content-type': 'application/json',
-          },
+        withCredentials: true,
+        headers: {
+          'Content-type': 'application/json',
         },
-      )
-      .then((res) => {
-        alert({ res });
+      })
+      .then((response) => {
+        console.log(response.data);
+        setReturnId(response);
       })
       .catch((error) => {
-        console.log(error.res);
-        alert('없는 회원');
+        console.log(error.response);
+        console.log('Error: ', error.message);
+        alert(error.message);
       });
   };
 
-  /** 비밀번호 찾기 api */
-  const getFindPw = (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        '',
-        {
-          name: checkName,
+  /** 비밀번호 찾기 api
+   * 서버 url : http://35.216.19.135:8080/find-password
+   */
+  const getFindPw = async () => {
+    setReturnPw('');
+    await axios
+      .get('/find-password', {
+        params: {
           email: checkEmail,
           id: checkId,
+          name: checkName,
         },
-        {
-          headers: {
-            'Content-type': 'application/json',
-          },
+        withCredentials: true,
+        headers: {
+          'Content-type': 'application/json',
         },
-      )
-      .then((res) => {
-        alert({ res });
+      })
+      .then((response) => {
+        console.log(response.data);
+        setReturnPw(response);
       })
       .catch((error) => {
-        console.log(error.res);
-        alert('없는 회원');
+        console.log(error.response);
+        console.log('Error: ', error.message);
+        alert(error.message);
       });
   };
 
@@ -205,6 +220,8 @@ const FindUserInfoPage = () => {
             emailValid={emailValid}
             checkName={checkName}
             checkEmail={checkEmail}
+            modalFor={modalForId}
+            modalMessage={returnId}
           />
         ) : (
           <FindPwInput
@@ -219,6 +236,8 @@ const FindUserInfoPage = () => {
             checkName={checkName}
             checkEmail={checkEmail}
             checkId={checkId}
+            modalFor={modalForPw}
+            modalMessage={returnPw}
           />
         )}
       </div>
