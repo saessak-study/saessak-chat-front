@@ -1,10 +1,10 @@
 /** LoginPage.js */
-export const ID_EMPTY = '※ 아이디를 입력해주세요 ※';
-export const PW_EMPTY = '※ 비밀번호를 입력해주세요 ※';
+export const ID_EMPTY = '※ 아이디를 확인해주세요 ※';
+export const PW_EMPTY = '※ 비밀번호를 확인해주세요 ※';
 
 /** FindIdInput.js */
-export const NAME_EMPTY = '※ 이름을 입력해주세요 ※';
-export const EMAIL_EMPTY = '※ 이메일을 입력해주세요 ※ ';
+export const NAME_EMPTY = '※ 이름을 확인해주세요 ※';
+export const EMAIL_EMPTY = '※ 이메일을 확인해주세요 ※ ';
 export const EMAIL_INVALID = '※ 이메일 형식이 맞지 않습니다 ※';
 
 /** RegisterPage.js */
