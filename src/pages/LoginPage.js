@@ -1,18 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Link, useFetcher, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from '../style/css/loginPage.module.css';
-import { ID_EMPTY, PW_EMPTY, PW_WRONG, NO_USER } from '../constants/message';
+import { ID_EMPTY, PW_EMPTY } from '../constants/message';
 import axios from 'axios';
-import useSWR from 'swr';
-
-export const fetcher = (url) =>
-  axios.get(url, { withCredentials: true }).then((response) => response.data);
+import { regPassword, regId } from '../constants/regEx';
 
 const LoginPage = () => {
-  const { data, error, revalidate } = useSWR('http://', fetcher);
-  // 데이터가 존재하지 않으면 로딩중이라는 것
-
   const [inputs, setInputs] = useState({
     userId: '',
     userPw: '',
@@ -32,76 +26,74 @@ const LoginPage = () => {
     });
   };
 
+  useEffect(() => {
+    if (regId.test(userId) && userId) setIdValid(true);
+    if (regPassword.test(userPw) && userPw) setpwValid(true);
+    if (!regId.test(userId) || !userId) setIdValid(false);
+    if (!regPassword.test(userPw) || !userPw) setpwValid(false);
+  }, [userId, userPw]);
+
   /** login버튼 누를 시 유효성 검사 */
   const loginBtnAction = (e) => {
     e.preventDefault();
-    if ((!userId && !userPw) || !userId) {
+    if (!idValid) {
       setIsAlert(true);
-      setIdValid(false);
-      setpwValid(false);
-    } else if (!userPw) {
+    } else if (!pwValid) {
       setIsAlert(true);
-      setIdValid(true);
-      setpwValid(false);
     } else {
       setIsAlert(false);
-      setIdValid(true);
-      setpwValid(true);
-      goToHome();
+      gotohome();
     }
   };
 
-  /** API -> form태그 onsubmit에 적용 */
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  /** localStorage 확인용 코드 -> 지울것  */
+  const gotohome = () => {
+    navigate('/mainchat', {
+      state: {
+        before: '/',
+        id: userId,
+      },
+    });
+    localStorage.setItem('id', userId);
+  };
+
+  /** API -> form태그 onsubmit에 적용
+   * package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
+   * 서버 url : http://35.216.19.135:8080/login
+   */
+  const handleSubmit = async () => {
     if (idValid && pwValid) {
-      // api요청시 관리되는 state값들이 있으면
-      // 요청 보내기 전에 state값들을 초기화
-      setIsAlert(false);
-      axios
-        .post(
-          'http://35.216.19.135:8080/signIn',
-          {
+      await axios
+        .get('/login', {
+          params: {
             id: userId,
-            pw: userPw,
+            password: userPw,
           },
-          {
-            withCredentials: true,
-            headers: {
-              'Content-type': 'application/json',
-            },
+          withCredentials: true,
+          headers: {
+            'Content-type': 'application/json',
           },
-        )
+        })
         .then((response) => {
-          revalidate();
-          // 성공 시 response로 mainchat으로 넘겨짐(정보들과 함께)
+          alert(response.message);
+          /** 브라우저에 id 저장 */
+          localStorage.clear();
+          localStorage.setItem('id', userId);
+          /** 성공 시 response로 mainchat으로 넘겨짐(정보들과 함께) */
           navigate('/mainchat', {
             state: {
               before: '/',
               id: userId,
-              pw: userPw,
             },
           });
         })
         .catch((error) => {
           // 에러 핸들링
-          if (error.response) {
-            setIsAlert(true);
-            console.log(error.response.data);
-          } else if (error.request) {
-            // 요청이 이루어졌으나, 노응답
-            console.log(error.request);
-          } else {
-            // 오류를 발생시킨 요청을 설정하는 중에 문제 발생
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
+          console.log(error.response);
+          console.log('Error: ', error.message);
+          alert(error.message);
         });
     }
-  };
-
-  const goToHome = () => {
-    navigate(`/mainchat`);
   };
 
   return (

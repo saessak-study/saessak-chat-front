@@ -76,15 +76,18 @@ const RegisterPage = () => {
     }
   };
 
-  const onRegisterHandler = () => {
-    axios
+  /** package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
+   *  서버 url : http://35.216.19.135:8080/sign-up
+   */
+  const onRegisterHandler = async () => {
+    await axios
       .post(
-        'http://35.216.19.135:8080/signUp',
+        '/sign-up',
         {
-          name: userName,
           id: userId,
-          pw: userPw,
           mail: userEmail,
+          name: userName,
+          pw: userPw,
         },
         {
           headers: {
@@ -93,15 +96,16 @@ const RegisterPage = () => {
           withCredentials: true,
         },
       )
-      .then((res) => {
-        console.log(res.data);
+      .then((response) => {
+        console.log(response.data);
+        localStorage.clear();
+        localStorage.setItem('id', userId);
+        localStorage.setItem('name', userName);
         navigate('/mainchat', {
           state: {
             before: '/registration',
-            name: userName,
             id: userId,
-            pw: userPw,
-            mail: userEmail,
+            name: userName,
           },
         });
       })
