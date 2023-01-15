@@ -5,12 +5,20 @@ import styles from '../style/css/loginPage.module.css';
 import { ID_EMPTY, PW_EMPTY } from '../constants/message';
 import axios from 'axios';
 import { regPassword, regId } from '../constants/regEx';
+import useSWR from 'swr';
+import fetcher from '../utils/fetcher';
 
 const LoginPage = () => {
   const [inputs, setInputs] = useState({
     userId: '',
     userPw: '',
   });
+  const {
+    data: userData,
+    error,
+    mutate,
+  } = useSWR('http://35.216.19.135:8080/online-user', fetcher);
+
   const { userId, userPw } = inputs;
   const [idValid, setIdValid] = useState(false);
   const [pwValid, setpwValid] = useState(false);
@@ -42,59 +50,45 @@ const LoginPage = () => {
       setIsAlert(true);
     } else {
       setIsAlert(false);
-      gotohome();
+      handleSubmit(e);
     }
-  };
-
-  /** localStorage 확인용 코드 -> 지울것  */
-  const gotohome = () => {
-    navigate('/mainchat', {
-      state: {
-        before: '/',
-        id: userId,
-      },
-    });
-    localStorage.setItem('id', userId);
   };
 
   /** API -> form태그 onsubmit에 적용
    * package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
    * 서버 url : http://35.216.19.135:8080/login
    */
-  const handleSubmit = async () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let body = {
+      id: userId,
+      password: userPw,
+    };
     if (idValid && pwValid) {
-      await axios
-        .get('/login', {
-          params: {
-            id: userId,
-            password: userPw,
-          },
-          withCredentials: true,
-          headers: {
-            'Content-type': 'application/json',
-          },
-        })
+      axios
+        .post('http://35.216.19.135:8080/login', body)
         .then((response) => {
-          alert(response.message);
+          console.log(response);
           /** 브라우저에 id 저장 */
           localStorage.clear();
           localStorage.setItem('id', userId);
-          /** 성공 시 response로 mainchat으로 넘겨짐(정보들과 함께) */
-          navigate('/mainchat', {
-            state: {
-              before: '/',
-              id: userId,
-            },
-          });
+          navigate('/mainchat');
         })
         .catch((error) => {
           // 에러 핸들링
-          console.log(error.response);
-          console.log('Error: ', error.message);
-          alert(error.message);
+          console.log(error);
+          console.log('Error: ', error.response.data.responseMessage);
+          alert(error.response.data.responseMessage);
         });
     }
   };
+  /** user로그인 상태에 따른 분기처리 */
+  useEffect(() => {
+    let userInfo = localStorage.getItem('id');
+    if (userInfo) {
+      navigate('/mainchat');
+    }
+  }, []);
 
   return (
     <div className={styles.app}>
