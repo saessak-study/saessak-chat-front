@@ -44,6 +44,15 @@ const HomePage = () => {
     }
   }, []);
 
+  const logOutAction = () => {
+    if (window.confirm('로그아웃 하시겠습니까?')) {
+      localStorage.clear();
+      navigate('/');
+    } else {
+      return;
+    }
+  };
+
   return (
     <div className={styles.mainPage}>
       <div className={styles.left_container}>
@@ -57,7 +66,9 @@ const HomePage = () => {
             <ChkUserOnline userName={'가나다라'} userOnline={false} />
           </div>
         </div>
-        <div className={styles.user_logout}>🚪로그아웃하기</div>
+        <div className={styles.user_logout} onClick={logOutAction}>
+          🚪로그아웃하기
+        </div>
       </div>
       <div className={styles.right_container}>
         <div className={styles.chatlog_container}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '../FindUserInfo/css/FindIdPwInput.module.css';
 import Modal from './Modal';
 import {
