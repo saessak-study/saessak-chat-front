@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import RegisterInput from '../components/Common/RegisterInput';
 import styles from '../style/css/registerPage.module.css';
 import axios from 'axios';
+// import fetcher from '../utils/fetcher';
 import {
   EMAIL_INVALID,
   PW_INVALID,
@@ -11,8 +12,15 @@ import {
   ID_VALID_CHECK,
 } from '../constants/message';
 import { regEmail, regPassword, regId, regName } from '../constants/regEx';
+// import useSWR from 'swr';
 
 const RegisterPage = () => {
+  // const {
+  //   data: userData,
+  //   error,
+  //   mutate,
+  // } = useSWR('http://35.216.19.135:8080/online-user', fetcher);
+
   const [inputs, setInputs] = useState({
     userId: '',
     userPw: '',
@@ -71,7 +79,6 @@ const RegisterPage = () => {
     } else if (emailMSG === true) {
       alert('이메일 형식이 올바르지 않습니다.');
     } else {
-      alert('회원가입이 완료되었습니다!');
       onRegisterHandler();
     }
   };
@@ -80,37 +87,24 @@ const RegisterPage = () => {
    *  서버 url : http://35.216.19.135:8080/sign-up
    */
   const onRegisterHandler = async () => {
+    let body = {
+      id: userId,
+      mail: userEmail,
+      name: userName,
+      pw: userPw,
+    };
     await axios
-      .post(
-        '/sign-up',
-        {
-          id: userId,
-          mail: userEmail,
-          name: userName,
-          pw: userPw,
-        },
-        {
-          headers: {
-            'Content-type': 'application/json',
-          },
-          withCredentials: true,
-        },
-      )
+      .put('http://35.216.19.135:8080/sign-up', body)
       .then((response) => {
-        console.log(response.data);
-        localStorage.clear();
-        localStorage.setItem('id', userId);
-        localStorage.setItem('name', userName);
-        navigate('/mainchat', {
-          state: {
-            before: '/registration',
-            id: userId,
-            name: userName,
-          },
-        });
+        console.log(response);
+        alert('회원 가입이 완료되었습니다!');
+        // mutate();
+        navigate('/');
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error);
+        console.log('Error: ', error.response.data.responseMessage);
+        alert(error.response.data.responseMessage);
       });
   };
 
@@ -131,6 +125,14 @@ const RegisterPage = () => {
       setEmailMSG(false);
     }
   }, [userPw, userPwChk, userName, userEmail]);
+
+  /** user로그인 상태에 따른 분기처리 */
+  useEffect(() => {
+    let userInfo = localStorage.getItem('id');
+    if (userInfo) {
+      navigate('/mainchat');
+    }
+  }, []);
 
   return (
     <div className={styles.register_wholesome}>
