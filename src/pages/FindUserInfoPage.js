@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import FindIdInput from '../components/FindUserInfo/FindIdInput';
 import FindPwInput from '../components/FindUserInfo/FindPwInput';
 import styles from '../style/css/findUserInfoPage.module.css';
@@ -19,6 +19,7 @@ const FindUserInfoPage = () => {
   const [emailValid, setEmailValid] = useState(false);
   const [idPwToggle, setIdPwToggle] = useState(true);
   const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
 
   /** api요청으로 받아올 데이터 */
 
@@ -51,26 +52,22 @@ const FindUserInfoPage = () => {
    * 서버 url : http://35.216.19.135:8080/find-id
    */
   const getFindId = async () => {
+    let body = {
+      email: checkEmail,
+      name: checkName,
+    };
     setReturnId('');
     await axios
-      .get('/find-id', {
-        params: {
-          email: checkEmail,
-          name: checkName,
-        },
-        withCredentials: true,
-        headers: {
-          'Content-type': 'application/json',
-        },
-      })
+      .post('/find-id', body)
       .then((response) => {
+        setModal(true);
         console.log(response.data);
-        setReturnId(response);
+        setReturnId(response.data.responseMessage.id);
       })
       .catch((error) => {
-        console.log(error.response);
-        console.log('Error: ', error.message);
-        alert(error.message);
+        console.log(error);
+        console.log('Error: ', error.response.data.responseMessage);
+        alert(error.response.data.responseMessage);
       });
   };
 
@@ -78,27 +75,23 @@ const FindUserInfoPage = () => {
    * 서버 url : http://35.216.19.135:8080/find-password
    */
   const getFindPw = async () => {
+    let body = {
+      email: checkEmail,
+      id: checkId,
+      name: checkName,
+    };
     setReturnPw('');
     await axios
-      .get('/find-password', {
-        params: {
-          email: checkEmail,
-          id: checkId,
-          name: checkName,
-        },
-        withCredentials: true,
-        headers: {
-          'Content-type': 'application/json',
-        },
-      })
+      .post('/find-password', body)
       .then((response) => {
+        setModal(true);
         console.log(response.data);
-        setReturnPw(response);
+        setReturnPw(response.data.responseMessage.password);
       })
       .catch((error) => {
-        console.log(error.response);
-        console.log('Error: ', error.message);
-        alert(error.message);
+        console.log(error);
+        console.log('Error: ', error.response.data.responseMessage);
+        alert(error.response.data.responseMessage);
       });
   };
 
@@ -114,7 +107,6 @@ const FindUserInfoPage = () => {
   /** 이메알 유효성 검사 함수 */
   const onCheckEmailValid = () => {
     if (regEmail.test(checkEmail)) {
-      setModal(true);
       setEmailEmpty(false);
       setNameEmpty(false);
       setEmailValid(false);
@@ -184,6 +176,14 @@ const FindUserInfoPage = () => {
   const modalHandler = () => {
     setModal(false);
   };
+
+  /** user로그인 상태에 따른 분기처리 */
+  useEffect(() => {
+    let userInfo = localStorage.getItem('id');
+    if (userInfo) {
+      navigate('/mainchat');
+    }
+  }, []);
 
   return (
     <div className={styles.app}>
