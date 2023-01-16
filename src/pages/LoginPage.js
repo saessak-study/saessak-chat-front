@@ -5,7 +5,6 @@ import styles from '../style/css/loginPage.module.css';
 import { ID_EMPTY, PW_EMPTY } from '../constants/message';
 import axios from 'axios';
 import { regPassword, regId } from '../constants/regEx';
-import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 
 const LoginPage = () => {
@@ -13,11 +12,6 @@ const LoginPage = () => {
     userId: '',
     userPw: '',
   });
-  const {
-    data: userData,
-    error,
-    mutate,
-  } = useSWR('http://35.216.19.135:8080/online-user', fetcher);
 
   const { userId, userPw } = inputs;
   const [idValid, setIdValid] = useState(false);
@@ -54,9 +48,7 @@ const LoginPage = () => {
     }
   };
 
-  /** API -> form태그 onsubmit에 적용
-   * package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
-   * 서버 url : http://35.216.19.135:8080/login
+  /**  서버 url : http://35.216.19.135:8080/login
    */
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,7 +58,7 @@ const LoginPage = () => {
     };
     if (idValid && pwValid) {
       axios
-        .post('http://35.216.19.135:8080/login', body)
+        .post('/login', body)
         .then((response) => {
           console.log(response);
           /** 브라우저에 id 저장 */
