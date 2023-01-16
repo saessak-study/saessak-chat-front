@@ -4,22 +4,18 @@ import ChatLog from '../components/HomePage/ChatLog';
 import ChkUserOnline from '../components/HomePage/ChkUserOnline';
 import styles from '../style/css/homePage.module.css';
 import chatlog from '../constants/chatlog.json';
-import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import axios from 'axios';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const {
-    data: userData,
-    error,
-    mutate,
-  } = useSWR('http://35.216.19.135:8080/online-user', fetcher);
 
   const [isBlocking, setIsBlocking] = useState(false);
   const [chatMessage, setChatMessage] = useState('');
   const [user, setUser] = useState('');
   const [chatFromMe, setChatFromMe] = useState(false);
+
+  // const [onlineUsers, setOnlineUsers] = useState({});
 
   /**
    * ^채팅창에 적은 글을 state에 저장하는 함수
@@ -37,12 +33,29 @@ const HomePage = () => {
    * TODO 로그아웃 시  localstorage 초기화.
    */
 
+  // 현재 접속중 유저 리스트 조회 api => 사용 여부 논의
+  // useEffect(() => {
+  //   axios.post('/online-user').then((response) => {
+  //     console.log(response.data);
+  //     setOnlineUsers(response.data);
+  //   });
+  // }, []);
+
   useEffect(() => {
     let userInfo = localStorage.getItem('id');
     if (!userInfo) {
       navigate('/');
     }
   }, []);
+
+  const logOutAction = () => {
+    if (window.confirm('로그아웃 하시겠습니까?')) {
+      localStorage.clear();
+      navigate('/');
+    } else {
+      return;
+    }
+  };
 
   return (
     <div className={styles.mainPage}>
@@ -57,7 +70,9 @@ const HomePage = () => {
             <ChkUserOnline userName={'가나다라'} userOnline={false} />
           </div>
         </div>
-        <div className={styles.user_logout}>🚪로그아웃하기</div>
+        <div className={styles.user_logout} onClick={logOutAction}>
+          🚪로그아웃하기
+        </div>
       </div>
       <div className={styles.right_container}>
         <div className={styles.chatlog_container}>
