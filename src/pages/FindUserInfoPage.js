@@ -138,6 +138,7 @@ const FindUserInfoPage = () => {
     if (checkName && checkEmail) {
       onCheckEmailValid();
       getFindId();
+      getFindId();
     }
   };
 
@@ -169,6 +170,7 @@ const FindUserInfoPage = () => {
 
     if (checkName && checkEmail && checkId) {
       onCheckEmailValid();
+      getFindPw();
       getFindPw();
     }
   };

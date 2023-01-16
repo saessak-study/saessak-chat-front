@@ -24,16 +24,39 @@ const HomePage = () => {
    * TODO 로그아웃 함수 추가할 것,
    * TODO 로그아웃 시  localstorage 초기화.
    */
+  const inputChange = (e, chatMessage, user) => {
+    setChatMessage(e.target.value);
+    console.log(chatlog);
+  };
 
   /**
-   * 유저의 상태에 따른 분기처리
+   * TODO 로그아웃 함수 추가할 것,
+   * TODO 로그아웃 시  localstorage 초기화.
    */
+
+  // 현재 접속중 유저 리스트 조회 api => 사용 여부 논의
+  // useEffect(() => {
+  //   axios.post('/online-user').then((response) => {
+  //     console.log(response.data);
+  //     setOnlineUsers(response.data);
+  //   });
+  // }, []);
+
   useEffect(() => {
     let userInfo = localStorage.getItem('id');
     if (!userInfo) {
       navigate('/');
     }
-  }, [navigate]);
+  }, []);
+
+  const logOutAction = () => {
+    if (window.confirm('로그아웃 하시겠습니까?')) {
+      localStorage.clear();
+      navigate('/');
+    } else {
+      return;
+    }
+  };
 
   return (
     <div className={styles.mainPage}>
@@ -48,7 +71,9 @@ const HomePage = () => {
             <ChkUserOnline userName={'가나다라'} userOnline={false} />
           </div>
         </div>
-        <div className={styles.user_logout}>🚪로그아웃하기</div>
+        <div className={styles.user_logout} onClick={logOutAction}>
+          🚪로그아웃하기
+        </div>
       </div>
       <div className={styles.right_container}>
         <div className={styles.chatlog_container}>

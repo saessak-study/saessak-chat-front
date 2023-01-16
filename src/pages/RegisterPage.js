@@ -57,10 +57,28 @@ const RegisterPage = () => {
     if (userId) {
       if (regId.test(userId)) {
         setIdMSG(false);
+        onCheckIdContinue();
       } else {
         alert('아이디 정보를 확인하세요');
       }
     }
+  };
+
+  // 아이디 중복 체크 api OK
+  const onCheckIdContinue = async () => {
+    await axios
+      .post('/id-duplicate-check', { id: userId })
+      .then((response) => {
+        console.log(response);
+        alert('사용 가능한 아이디입니다.');
+        setIdMSG(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log('Error: ', error.response.data.responseMessage);
+        alert(error.response.data.responseMessage);
+        setIdMSG(true);
+      });
   };
 
   /**
@@ -94,12 +112,7 @@ const RegisterPage = () => {
       pw: userPw,
     };
     await axios
-      .put('http://35.216.19.135:8080/sign-up', body, {
-        headers: {
-          'Content-type': 'application/json',
-        },
-        withCredentials: false,
-      })
+      .put('/sign-up', body)
       .then((response) => {
         console.log(response);
         alert('회원 가입이 완료되었습니다!');
