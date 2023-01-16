@@ -13,11 +13,11 @@ const LoginPage = () => {
     userId: '',
     userPw: '',
   });
-  const {
-    data: userData,
-    error,
-    mutate,
-  } = useSWR('http://35.216.19.135:8080/online-user', fetcher);
+  // const {
+  //   data: userData,
+  //   error,
+  //   mutate,
+  // } = useSWR('http://35.216.19.135:8080/online-user', fetcher);
 
   const { userId, userPw } = inputs;
   const [idValid, setIdValid] = useState(false);
@@ -66,16 +66,19 @@ const LoginPage = () => {
     };
     if (idValid && pwValid) {
       axios
-        .post('http://35.216.19.135:8080/login', body)
+        .post('http://35.216.19.135:8080/login', body, {
+          headers: {
+            'Content-type': 'application/json',
+          },
+          withCredentials: false,
+        })
         .then((response) => {
-          console.log(response);
           /** 브라우저에 id 저장 */
           localStorage.clear();
           localStorage.setItem('id', userId);
           navigate('/mainchat');
         })
         .catch((error) => {
-          // 에러 핸들링
           console.log(error);
           console.log('Error: ', error.response.data.responseMessage);
           alert(error.response.data.responseMessage);

@@ -94,7 +94,12 @@ const RegisterPage = () => {
       pw: userPw,
     };
     await axios
-      .put('http://35.216.19.135:8080/sign-up', body)
+      .put('http://35.216.19.135:8080/sign-up', body, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+        withCredentials: false,
+      })
       .then((response) => {
         console.log(response);
         alert('회원 가입이 완료되었습니다!');

@@ -7,29 +7,17 @@ import chatlog from '../constants/chatlog.json';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import axios from 'axios';
+import * as SockJS from 'sockjs-client';
 
 const HomePage = () => {
+  const userId = localStorage.getItem('id');
   const navigate = useNavigate();
-  const {
-    data: userData,
-    error,
-    mutate,
-  } = useSWR('http://35.216.19.135:8080/online-user', fetcher);
 
-  const [isBlocking, setIsBlocking] = useState(false);
-  const [chatMessage, setChatMessage] = useState('');
-  const [user, setUser] = useState('');
-  const [chatFromMe, setChatFromMe] = useState(false);
-
-  /**
-   * ^채팅창에 적은 글을 state에 저장하는 함수
-   * @param {e} e
-   * @param {string} chatMessage
-   * @param {string} user
-   */
-  const inputChange = (e, chatMessage, user) => {
-    setChatMessage(e.target.value);
-    console.log(chatlog);
+  const onClickConnectBtn = () => {
+    const sock = new SockJS(`ws://35.216.19.135:8080/chat/${userId}`);
+    sock.onopen = function (e) {
+      console.log('message', e.data);
+    };
   };
 
   /**
@@ -37,12 +25,15 @@ const HomePage = () => {
    * TODO 로그아웃 시  localstorage 초기화.
    */
 
+  /**
+   * 유저의 상태에 따른 분기처리
+   */
   useEffect(() => {
     let userInfo = localStorage.getItem('id');
     if (!userInfo) {
       navigate('/');
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className={styles.mainPage}>
@@ -51,7 +42,7 @@ const HomePage = () => {
         <div className={styles.user_container}>
           <div className={styles.user_online}>🖐현재 접속중인 유저</div>
           <div className={styles.user_status_container}>
-            <ChkUserOnline userName={'정길웅'} userOnline={true} />
+            <ChkUserOnline userName={'정길웅'} userOnline={false} />
             <ChkUserOnline userName={'박아연'} userOnline={false} />
             <ChkUserOnline userName={'김필'} userOnline={false} />
             <ChkUserOnline userName={'가나다라'} userOnline={false} />
@@ -77,8 +68,9 @@ const HomePage = () => {
           </div>
         </div>
         <div className={styles.chatInput_container}>
-          <input className={styles.chatInput} onChange={inputChange}></input>
+          <input className={styles.chatInput}></input>
           <div className={styles.chatInput_send}>전송</div>
+          <div onClick={onClickConnectBtn()}>테스트 버튼입니다 테스트</div>
         </div>
       </div>
     </div>
