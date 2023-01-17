@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import RegisterInput from '../components/Common/RegisterInput';
 import styles from '../style/css/registerPage.module.css';
 import axios from 'axios';
-// import fetcher from '../utils/fetcher';
 import {
   EMAIL_INVALID,
   PW_INVALID,
@@ -12,15 +11,8 @@ import {
   ID_VALID_CHECK,
 } from '../constants/message';
 import { regEmail, regPassword, regId, regName } from '../constants/regEx';
-// import useSWR from 'swr';
 
 const RegisterPage = () => {
-  // const {
-  //   data: userData,
-  //   error,
-  //   mutate,
-  // } = useSWR('http://35.216.19.135:8080/online-user', fetcher);
-
   const [inputs, setInputs] = useState({
     userId: '',
     userPw: '',
