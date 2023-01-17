@@ -2,11 +2,13 @@ import React from 'react';
 import styles from '../../style/css/homePage.module.css';
 
 const ChatLog = ({ chatFromMe, userName, chatMessage, chatDate }) => {
+  const userId = localStorage.getItem('id');
+
   return (
     <div>
       <div
         className={
-          chatFromMe === true
+          chatFromMe === { userId }
             ? styles.typed_chat_fromMe
             : styles.typed_chat_fromPeople
         }

@@ -28,6 +28,18 @@ const HomePage = () => {
   const [sockJs, setSockJs] = useState(null);
   const [onlineUser, setOnlineUser] = useState(null);
 
+  // const onClickConnectBtn = () => {
+  //   const sock = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
+  //   sock.onmessage = function (e) {
+  //     console.log('message', e.data);
+  //     sock.close();
+  //   };
+  //   sock.onopen = function () {
+  //     console.log('open');
+  //     sock.send('test');
+  //   };
+  // };
+
   const logOutAction = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       localStorage.clear();
@@ -42,14 +54,12 @@ const HomePage = () => {
   useEffect(() => {
     const sock = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
     sock.onmessage = function (e) {
-      let hello = JSON.parse(e.data);
-      setHelloUser(hello);
-      console.log(hello);
-      setSockJs(sock);
+      console.log(e.data);
     };
 
     axios.get('http://35.216.19.135:8080/online-user').then((response) => {
-      console.log(response);
+      setOnlineUser(response.data);
+      console.log(response.data);
     });
   }, []);
 
@@ -64,7 +74,7 @@ const HomePage = () => {
       navigate('/');
     }
   }, [navigate]);
-  // const chatDate = new Date().toLocaleString();
+
   return (
     <div className={styles.mainPage}>
       <div className={styles.left_container}>
@@ -72,14 +82,14 @@ const HomePage = () => {
         <div className={styles.user_container}>
           <div className={styles.user_online}>🖐현재 접속중인 유저</div>
           <div className={styles.user_status_container}>
-            {onlineUser &&
+            {/* {onlineUser &&
               onlineUser.responseMessage.map((user) => (
                 <ChkUserOnline
                   key={user.userId}
                   userName={user.userName}
                   userOnline={user.isOnline}
                 />
-              ))}
+              ))} */}
           </div>
         </div>
         <div className={styles.user_logout} onClick={logOutAction}>
@@ -88,7 +98,11 @@ const HomePage = () => {
       </div>
       <div className={styles.right_container}>
         <div className={styles.chatlog_container}>
-          <div className={styles.chatlog_stack} id="chatlog_stack"></div>
+          <div className={styles.chatlog_stack}>
+            {/* {helloUser && (
+              <ChatLog chatFromMe={userId} chatMessage={helloUser} />
+            )} */}
+          </div>
         </div>
         <div className={styles.chatInput_container}>
           <input className={styles.chatInput}></input>
