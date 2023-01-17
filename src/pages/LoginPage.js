@@ -76,7 +76,7 @@ const LoginPage = () => {
           },
         })
         .then((response) => {
-          alert(response.message);
+          alert(response.data.responseMessage);
           /** 브라우저에 id 저장 */
           localStorage.clear();
           localStorage.setItem('id', userId);
