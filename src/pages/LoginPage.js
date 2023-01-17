@@ -62,18 +62,14 @@ const LoginPage = () => {
    * 서버 url : http://35.216.19.135:8080/login
    */
   const handleSubmit = (e) => {
-    e.preventDefault();
     let body = {
       id: userId,
       password: userPw,
     };
+    e.preventDefault();
     if (idValid && pwValid) {
-      await axios
-        .get('/login', {
-          params: {
-            id: userId,
-            password: userPw,
-          },
+      axios
+        .post('/login', body, {
           withCredentials: true,
           headers: {
             'Content-type': 'application/json',
@@ -88,7 +84,7 @@ const LoginPage = () => {
         })
         .catch((error) => {
           // 에러 핸들링
-          console.log(error.response);
+          console.log(error);
           console.log('Error: ', error.message);
           alert(error.message);
         });
