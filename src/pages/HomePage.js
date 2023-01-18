@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ChatLog from '../components/HomePage/ChatLog';
 import ChkUserOnline from '../components/HomePage/ChkUserOnline';
@@ -26,33 +26,34 @@ const HomePage = () => {
   const [chatInput, setChatInput] = useState('');
   const [helloUser, setHelloUser] = useState([]);
   const [chatData, setChatData] = useState([]);
-  const [sockJs, setSockJs] = useState(null);
+  // const [sockJs, setSockJs] = useState(null);
   const [onlineUser, setOnlineUser] = useState(null);
 
   const logOutAction = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       localStorage.clear();
       console.log('로그아웃입니당');
-      sockJs.onclose = function () {
-        console.log('로그아웃');
-      };
+      // sockJs.onclose = function () {
+      //   console.log('로그아웃');
+      // };
       navigate('/');
     } else return;
   };
 
-  const onSubmitMessage = () => {
+  const onSubmitMessage = useCallback(() => {
     const TODAY = new Date().toISOString().split('T')[0];
     let body = {
       targetDate: TODAY,
     };
-    sockJs.onmessage = function () {
-      sockJs.send('안ㄴㅕㅇㄴ');
-      console.log(2123123);
+    const sockJs = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
+    sockJs.onopen = function () {
+      sockJs.send(chatInput);
+      console.log('보내짐');
+      axios.post('/chat-history', body).then((response) => {
+        setChatData(response.data.responseMessage);
+      });
     };
-    axios.post('/chat-history', body).then((response) => {
-      setChatData(response.data.responseMessage);
-    });
-  };
+  }, [chatInput, userId]);
 
   const onChange = (e) => {
     setChatInput(e.target.value);
@@ -62,15 +63,31 @@ const HomePage = () => {
    * * 화면 렌더링 됐을 때 sock연결 하는 거
    */
   useEffect(() => {
-    const sock = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
-    sock.onmessage = function (e) {
-      let helloMessage = JSON.parse(e.data);
-      setHelloUser([...helloUser, helloMessage]);
-    };
+    // const sock = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
+    // sock.onmessage = function (e) {
+    //   let helloMessage = JSON.parse(e.data);
+    //   setHelloUser([...helloUser, helloMessage]);
+    // };
     mutate();
     setOnlineUser(userData);
-    setSockJs(sock);
+    // setSockJs(sock);
+
+    // return () => {
+    //   sock.onclose = function () {
+    //     console.log('close');
+    //   };
+    // };
   }, [userId, mutate, userData]);
+
+  useEffect(() => {
+    const TODAY = new Date().toISOString().split('T')[0];
+    let body = {
+      targetDate: TODAY,
+    };
+    axios.post('/chat-history', body).then((response) => {
+      setChatData(response.data.responseMessage);
+    });
+  }, [chatData, onSubmitMessage]);
 
   useEffect(() => {
     const TODAY = new Date().toISOString().split('T')[0];

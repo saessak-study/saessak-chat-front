@@ -8,7 +8,7 @@ const ChatLog = ({ chatFromMe, userName, chatMessage, chatDate }) => {
     <div>
       <div
         className={
-          chatFromMe === { userId }
+          chatFromMe === userId
             ? styles.typed_chat_fromMe
             : styles.typed_chat_fromPeople
         }
