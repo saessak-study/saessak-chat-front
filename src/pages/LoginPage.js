@@ -86,7 +86,7 @@ const LoginPage = () => {
           // 에러 핸들링
           console.log(error);
           console.log('Error: ', error.message);
-          alert(error.message);
+          alert(error.response.data.responseMessage);
         });
     }
   };
