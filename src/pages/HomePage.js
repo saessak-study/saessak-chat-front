@@ -14,38 +14,48 @@ const HomePage = () => {
   /**
    * * 주기적을 요청보내는 코드
    */
-  // const {
-  //   data: userData,
-  //   error,
-  //   isLoading,
-  //   isValidating,
-  //   mutate,
-  // } = useSWR('http://35.216.19.135:8080/online-user', fetcher, {
-  //   dedupingInterval: 5000,
-  // });
-  const [helloUser, setHelloUser] = useState('');
-
+  const {
+    data: userData,
+    error,
+    isLoading,
+    isValidating,
+    mutate,
+  } = useSWR('http://35.216.19.135:8080/online-user', fetcher, {
+    refreshInterval: 10000,
+  });
+  const [chatInput, setChatInput] = useState('');
+  const [helloUser, setHelloUser] = useState([]);
+  const [chatData, setChatData] = useState([]);
   const [sockJs, setSockJs] = useState(null);
   const [onlineUser, setOnlineUser] = useState(null);
-
-  // const onClickConnectBtn = () => {
-  //   const sock = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
-  //   sock.onmessage = function (e) {
-  //     console.log('message', e.data);
-  //     sock.close();
-  //   };
-  //   sock.onopen = function () {
-  //     console.log('open');
-  //     sock.send('test');
-  //   };
-  // };
 
   const logOutAction = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       localStorage.clear();
-      window.location.reload();
+      console.log('로그아웃입니당');
+      sockJs.onclose = function () {
+        console.log('로그아웃');
+      };
       navigate('/');
     } else return;
+  };
+
+  const onSubmitMessage = () => {
+    const TODAY = new Date().toISOString().split('T')[0];
+    let body = {
+      targetDate: TODAY,
+    };
+    sockJs.onmessage = function () {
+      sockJs.send('안ㄴㅕㅇㄴ');
+      console.log(2123123);
+    };
+    axios.post('/chat-history', body).then((response) => {
+      setChatData(response.data.responseMessage);
+    });
+  };
+
+  const onChange = (e) => {
+    setChatInput(e.target.value);
   };
 
   /**
@@ -54,19 +64,23 @@ const HomePage = () => {
   useEffect(() => {
     const sock = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
     sock.onmessage = function (e) {
-      console.log(e.data);
+      let helloMessage = JSON.parse(e.data);
+      setHelloUser([...helloUser, helloMessage]);
     };
+    mutate();
+    setOnlineUser(userData);
+    setSockJs(sock);
+  }, [userId, mutate, userData]);
 
-    axios.get('http://35.216.19.135:8080/online-user').then((response) => {
-      setOnlineUser(response.data);
-      console.log(response.data);
+  useEffect(() => {
+    const TODAY = new Date().toISOString().split('T')[0];
+    let body = {
+      targetDate: TODAY,
+    };
+    axios.post('/chat-history', body).then((response) => {
+      setChatData(response.data.responseMessage);
     });
   }, []);
-
-  // useEffect(() => {
-  //   mutate();
-  //   setOnlineUser(userData);
-  // }, [userData]);
 
   useEffect(() => {
     let userInfo = localStorage.getItem('id');
@@ -82,14 +96,14 @@ const HomePage = () => {
         <div className={styles.user_container}>
           <div className={styles.user_online}>🖐현재 접속중인 유저</div>
           <div className={styles.user_status_container}>
-            {/* {onlineUser &&
+            {onlineUser &&
               onlineUser.responseMessage.map((user) => (
                 <ChkUserOnline
                   key={user.userId}
                   userName={user.userName}
                   userOnline={user.isOnline}
                 />
-              ))} */}
+              ))}
           </div>
         </div>
         <div className={styles.user_logout} onClick={logOutAction}>
@@ -99,14 +113,40 @@ const HomePage = () => {
       <div className={styles.right_container}>
         <div className={styles.chatlog_container}>
           <div className={styles.chatlog_stack}>
-            {/* {helloUser && (
-              <ChatLog chatFromMe={userId} chatMessage={helloUser} />
-            )} */}
+            {/* {helloUser &&
+              helloUser.map((item, index) => (
+                <ChatLog
+                  key={item.userId}
+                  userName={item.userName}
+                  chatFromMe={userId}
+                  chatMessage={item.message}
+                />
+              ))} */}
+            {chatData &&
+              chatData.map((item, index) => (
+                <ChatLog
+                  key={index}
+                  userName={item.userName}
+                  chatFromMe={item.userId}
+                  chatMessage={item.message}
+                  chatDate={item.sendTime}
+                />
+              ))}
           </div>
         </div>
         <div className={styles.chatInput_container}>
-          <input className={styles.chatInput}></input>
-          <div className={styles.chatInput_send}>전송</div>
+          <input
+            className={styles.chatInput}
+            onChange={onChange}
+            value={chatInput}
+            type="text"
+          ></input>
+          <div
+            className={styles.chatInput_send}
+            onClick={() => onSubmitMessage()}
+          >
+            전송
+          </div>
         </div>
       </div>
     </div>
