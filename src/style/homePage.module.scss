@@ -59,10 +59,12 @@ body {
 .user_OnlineCircle {
   @extend .user_circle;
   background-color: #22ff00;
+  margin-left: 1.5rem;
 }
 .user_OfflineCircle {
   @extend .user_circle;
   background-color: #9ea29e;
+  margin-left: 1.5rem;
 }
 .user_logout {
   color: white;

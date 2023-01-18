@@ -22,7 +22,6 @@ const HomePage = () => {
     },
   );
   const [chatInput, setChatInput] = useState('');
-  const [helloUser, setHelloUser] = useState([]);
   const [chatData, setChatData] = useState([]);
 
   const logOutAction = () => {
@@ -34,23 +33,13 @@ const HomePage = () => {
   };
 
   const onSubmitMessage = useCallback(() => {
-    const TODAY = new Date().toISOString().split('T')[0];
-    let body = {
-      targetDate: TODAY,
-    };
     const sockJs = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
     sockJs.onopen = function () {
       sockJs.send(chatInput);
       console.log('보내짐');
-      axios.post('/chat-history', body).then((response) => {
+      axios.get('/chat-history').then((response) => {
         setChatData(response.data.responseMessage);
       });
-
-      sockJs.onmessage = function () {
-        axios.post('/chat-history', body).then((response) => {
-          setChatData(response.data.responseMessage);
-        });
-      };
     };
     setChatInput('');
   }, [chatInput, userId]);
@@ -60,38 +49,28 @@ const HomePage = () => {
   };
 
   /**
-   * * 화면 렌더링 됐을 때 sock연결 하는 거
+   * * sock연결 및 receive
    */
-
-  // useEffect(() => {
-  //   const TODAY = new Date().toISOString().split('T')[0];
-  //   let body = {
-  //     targetDate: TODAY,
-  //   };
-  //   axios.post('/chat-history', body).then((response) => {
-  //     setChatData(response.data.responseMessage);
-  //   });
-  // }, [onSubmitMessage]);
 
   useEffect(() => {
     const sock = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
     sock.onopen = function () {
       console.log('sock 연결됐다.');
 
+      mutate();
       sock.onmessage = function () {
-        axios.post('/chat-history', body).then((response) => {
+        axios.get('/chat-history').then((response) => {
           setChatData(response.data.responseMessage);
         });
       };
-    };
-    const TODAY = new Date().toISOString().split('T')[0];
-    let body = {
-      targetDate: TODAY,
+
+      sock.onclose = function () {
+        console.log('없애줘..');
+      };
     };
 
-    axios.post('/chat-history', body).then((response) => {
+    axios.get('/chat-history').then((response) => {
       setChatData(response.data.responseMessage);
-      mutate();
     });
   }, []);
 
@@ -126,7 +105,7 @@ const HomePage = () => {
       <div className={styles.right_container}>
         <div className={styles.chatlog_container}>
           <div className={styles.chatlog_stack}>
-            {chatData &&
+            {chatData ? (
               chatData.map((item, index) => (
                 <ChatLog
                   key={index}
@@ -135,7 +114,10 @@ const HomePage = () => {
                   chatMessage={item.message}
                   chatDate={item.sendTime}
                 />
-              ))}
+              ))
+            ) : (
+              <div>아직 데이터가 없어유 수정해보아유</div>
+            )}
           </div>
         </div>
         <div className={styles.chatInput_container}>

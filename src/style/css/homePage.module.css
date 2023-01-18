@@ -63,10 +63,12 @@ body {
 
 .user_OnlineCircle {
   background-color: #22ff00;
+  margin-left: 1.5rem;
 }
 
 .user_OfflineCircle {
   background-color: #9ea29e;
+  margin-left: 1.5rem;
 }
 
 .user_logout {
