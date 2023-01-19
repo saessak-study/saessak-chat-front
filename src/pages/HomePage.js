@@ -89,13 +89,17 @@ const HomePage = () => {
           <div className={styles.user_online}>🖐현재 접속중인 유저</div>
           <div className={styles.user_status_container}>
             {userData &&
-              userData.responseMessage.map((user) => (
-                <ChkUserOnline
-                  key={user.userId}
-                  userName={user.userName}
-                  userOnline={user.isOnline}
-                />
-              ))}
+              userData.responseMessage
+                .sort((a, b) => {
+                  return a.isOnline === b.isOnline ? 0 : a.isOnline ? -1 : 1;
+                })
+                .map((user) => (
+                  <ChkUserOnline
+                    key={user.userId}
+                    userName={user.userName}
+                    userOnline={user.isOnline}
+                  />
+                ))}
           </div>
         </div>
         <div className={styles.user_logout} onClick={logOutAction}>
