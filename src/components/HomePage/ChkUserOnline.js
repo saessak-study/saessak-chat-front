@@ -5,12 +5,12 @@ const ChkUserOnline = ({ userName, userOnline }) => {
   return (
     <div>
       <div className={styles.user_status}>
-        <div> {userName} </div>
         {userOnline === true ? (
-          <div className={styles.user_OnlineCircle}></div>
+          <div className={styles.user_OnlineCircle} />
         ) : (
-          <div className={styles.user_OfflineCircle}></div>
+          <div className={styles.user_OfflineCircle} />
         )}
+        <div className={styles.user_name}> {userName} </div>
       </div>
     </div>
   );

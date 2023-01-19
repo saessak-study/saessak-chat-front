@@ -1,6 +1,0 @@
-[
-  { "chatFromMe": false, "userName": "정길웅", "chatMessage": "안녕하세요?" },
-  { "chatFromMe": true, "userName": "신하영", "chatMessage": "안녕?" },
-  { "chatFromMe": false, "userName": "심성보", "chatMessage": "hello?" },
-  { "chatFromMe": false, "userName": "심성보", "chatMessage": "hello?" }
-]

@@ -5,14 +5,12 @@ import styles from '../style/css/loginPage.module.css';
 import { ID_EMPTY, PW_EMPTY } from '../constants/message';
 import axios from 'axios';
 import { regPassword, regId } from '../constants/regEx';
-import fetcher from '../utils/fetcher';
 
 const LoginPage = () => {
   const [inputs, setInputs] = useState({
     userId: '',
     userPw: '',
   });
-
   const { userId, userPw } = inputs;
   const [idValid, setIdValid] = useState(false);
   const [pwValid, setpwValid] = useState(false);
@@ -48,19 +46,37 @@ const LoginPage = () => {
     }
   };
 
-  /**  서버 url : http://35.216.19.135:8080/login
+  /** localStorage 확인용 코드 -> 지울것  */
+  const gotohome = () => {
+    navigate('/mainchat', {
+      state: {
+        before: '/',
+        id: userId,
+      },
+    });
+    localStorage.setItem('id', userId);
+  };
+
+  /** API -> form태그 onsubmit에 적용
+   * package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
+   * 서버 url : http://35.216.19.135:8080/login
    */
   const handleSubmit = (e) => {
-    e.preventDefault();
     let body = {
       id: userId,
       password: userPw,
     };
+    e.preventDefault();
     if (idValid && pwValid) {
       axios
-        .post('/login', body)
+        .post('/login', body, {
+          withCredentials: true,
+          headers: {
+            'Content-type': 'application/json',
+          },
+        })
         .then((response) => {
-          console.log(response);
+          alert(response.data.responseMessage);
           /** 브라우저에 id 저장 */
           localStorage.clear();
           localStorage.setItem('id', userId);
@@ -69,7 +85,7 @@ const LoginPage = () => {
         .catch((error) => {
           // 에러 핸들링
           console.log(error);
-          console.log('Error: ', error.response.data.responseMessage);
+          console.log('Error: ', error.message);
           alert(error.response.data.responseMessage);
         });
     }
@@ -87,11 +103,7 @@ const LoginPage = () => {
       <div className={styles.app_name}>🌱SaessakChat🌱</div>
 
       <div className={styles.login_container}>
-        <form
-          noValidate=""
-          className={styles.login_form}
-          onSubmit={handleSubmit}
-        >
+        <form noValidate="" className={styles.login_form}>
           <div className={styles.login_submit_container}>
             <div className={styles.login_input_container}>
               <div className={styles.input_id}>

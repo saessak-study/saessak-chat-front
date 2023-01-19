@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import RegisterInput from '../components/Common/RegisterInput';
 import styles from '../style/css/registerPage.module.css';
 import axios from 'axios';
-// import fetcher from '../utils/fetcher';
 import {
   EMAIL_INVALID,
   PW_INVALID,
@@ -94,9 +93,6 @@ const RegisterPage = () => {
     }
   };
 
-  /** package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
-   *  서버 url : http://35.216.19.135:8080/sign-up
-   */
   const onRegisterHandler = async () => {
     let body = {
       id: userId,
