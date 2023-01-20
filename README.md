@@ -1,74 +1,96 @@
 # Saessak-chat-front
 
-새싹 채팅 앱 프론트엔드 레포지토리
+## Features
 
-# Getting Started with Create React App
+### 로그인 화면
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. 처음 접속 시 메인 화면은 로그인이다.
+2. 아무것도 입력 안 하고 로그인 버튼 누르면 || 비밀번호만 입력하고 로그인 버튼 누르면 
+⇒ 아이디를 입력해주세요
+3. 아이디만 입력하고 로그인 버튼 누르면
+⇒ 비밀번호를 입력해주세요
+4. 아이디는 존재하나 비밀번호가 틀릴 시
+⇒ 비밀번호를 다시 확인해주세요
+5. 아이디, 비밀번호가 저장된 user
+⇒ 로그인 성공 → mainChatPage로 이동
 
-## Available Scripts
+### 회원가입 화면
 
-In the project directory, you can run:
+1. 아이디 중복 체크
+    1. 아이디 입력하고 옆에 버튼 누름 → 서버에서 DB에 저장된 회원들의 ID를 불러온다.
+    2. 이미 있는 아이디 값이면 이미 사용중인 아이디입니다.
+2. 아이디 패턴 유효성 검사 : 4~12자의 영문 대소문자와 숫자로만 입력
+⇒  4~12자의 영문 대소문자와 숫자로만 입력해주세요
+3. 비밀번호 패턴 유효성 검사 : 최소 8자에 하나의 문자 및 하나의 숫자 및
+하나의 특수 문자 포함된 비밀번호인지 체크
+⇒ 8~16자 소문자, 숫자, 특수문자를 사용하세요
+4. 비밀번호 재확인 : 초기 입력한 비밀번호 input과 같은지 확인
+⇒ 비밀번호가 일치하지 않습니다.
+5. 이름에 한글이 아닌 영문 또는 숫자가 섞일 경우 || 이메일 형식이 올바르지 않을 경우 || 아이디 형식이 올바르지 않을 경우 → 이메일 input 아래에 경고문 출력
+⇒ 올바른 정보를 입력해주세요
+6. 이메일 유효성 검사 : @와 .이 들어갔는지, 그리고 . 뒤에 영어가 2자리 이상인지 체크
+⇒ 이메일 형식이 맞지 않습니다.
 
-### `npm start`
+### 아이디 찾기 화면
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### [이름, 이메일 입력]
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. 아무것도 입력 안 하고 확인 버튼 누르면 || 이메일만 입력하고 확인 버튼 누르면 → 이메일 input 아래에 경고문 출력
+⇒ 이름을 입력해주세요
+2. 이름만 입력하고 확인 버튼 누르면 → 이메일 input 아래에 경고문 출력
+⇒ 이메일을 입력해주세요
+3. 이름, 이메일이 저장되지 않은 user
+⇒ 존재하지 않는 회원 정보입니다.
+4. 이메일 형식이 올바르지 않을 경우 → 이메일 input 아래에 경고문 출력
+⇒ 올바른 정보를 입력해주세요
+5. 이메일이 user정보에 저장이 안 되어 있는 경우
+⇒ 이메일을 다시 확인해주세요
+6. 이름이 user  정보에 저장 안 되어 있는 경우
+⇒ 이름을 다시 확인해주세요
 
-### `npm test`
+#### [아이디 알려주는 팝업창]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. 이름, 이메일이 저장된 user -> 서버에서 받아온 아이디 정보 팝업창 띄움
+⇒ 팝업창을 alert창으로 변경 가능
 
-### `npm run build`
+### 비밀번호 찾기 화면
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### [이름, 아이디, 이메일 입력]
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. 아무것도 입력 안 하고 확인 버튼 누르면 || 이메일만 입력하고 확인 버튼 누르면  → 이메일 input 아래에 경고문 출력
+⇒ 아이디를 입력해주세요
+2. 아이디만 입력하고 확인 버튼 누르면  → 이메일 input 아래에 경고문 출력
+⇒ 이메일을 입력해주세요
+3. 아이디, 이메일이 저장되지 않은 user  → 이메일 input 아래에 경고문 출력
+⇒ 아이디, 이메일을 잘못 입력하였습니다.
+4. 이메일 형식이 올바르지 않을 경우 → 이메일 input 아래에 경고문 출력
+⇒ 올바른 정보를 입력해주세요
+5. 이메일이 user정보에 저장이 안 되어 있는 경우
+⇒ 이메일을 다시 확인해주세요
+6. 이름이 user  정보에 저장 안 되어 있는 경우
+⇒ 이름을 다시 확인해주세요
+7. 아이디가 user 정보에 저장 안 되어 있는 경우
+⇒ 아이디를 다시 확인해주세요
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### [비밀번호 알려주는 팝업창]
 
-### `npm run eject`
+1. 아이디, 이메일이 저장된 user → 서버에서 받아온 비밀번호 정보 팝업창 띄움
+⇒ 팝업창을 alert창으로 변경 가능
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 채팅 메인 화면
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. 현재 접속중인 유저는 위 -> 아래로 쌓여간다.
+- 결국 가장 오래 머물렀던 유저가 맨 위에 자리하게 된다.
+- 현재 접속중인 유저 리스트의 스크롤 방향은 아래쪽이다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. 채팅은 아래 -> 위쪽으로 쌓여간다.
+- 가장 오래 전에 보내진 채팅은 제일 상단에 있다.
+- 채팅창의 스크롤 방향은 위쪽이다.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. 채팅 말풍선 컴포넌트
+- 내가 보낸 채팅은 초록색이다.
+- 상대방에 보낸 채팅은 흰색이다.
+- 하나의 채팅에는 사용자명, 보낸 날짜와 시간, 내용이 적혀있다.
 
-## Learn More
+4. 로그아웃하기를 누르면 confirm창이나 팝업창으로 한 번 더 로그아웃할 것인지 물어본 뒤에 예를 누르면 초기 로그인 화면으로 돌아간다.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
