@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ChatLog from '../components/HomePage/ChatLog';
+import LoginMessage from '../components/HomePage/LoginMessage';
 import ChkUserOnline from '../components/HomePage/ChkUserOnline';
 import styles from '../style/css/homePage.module.css';
 import useSWR from 'swr';
@@ -23,9 +24,11 @@ const HomePage = () => {
   );
   const [chatInput, setChatInput] = useState('');
   const [chatData, setChatData] = useState([]);
+  const [sockJs, setSockJs] = useState();
 
   const logOutAction = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
+      sockJs.close();
       localStorage.clear();
       console.log('로그아웃입니당');
       navigate('/');
@@ -33,14 +36,13 @@ const HomePage = () => {
   };
 
   const onSubmitMessage = useCallback(() => {
-    const sockJs = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
-    sockJs.onopen = function () {
+    if(sockJs){
       sockJs.send(chatInput);
-      console.log('보내짐');
-      axios.get('/chat-history').then((response) => {
-        setChatData(response.data.responseMessage);
-      });
-    };
+    } else {
+      let newSocket = connectSocket();
+      newSocket.send(newSocket);
+      setSockJs(newSocket);
+    }
     setChatInput('');
   }, [chatInput, userId]);
 
@@ -48,30 +50,46 @@ const HomePage = () => {
     setChatInput(e.target.value);
   };
 
-  /**
-   * * sock연결 및 receive
-   */
+  const getTodayChattingHistory = (async () => {
+    let today = new Date();
+    let body = {
+      targetDate: `${today.getFullYear()}-${today.getMonth() < 9 ? '0' : ''}${today.getMonth() + 1}-${today.getDate()}`,
+    };
+    let response = await axios.post('/chat-history',body)
+    
+    return response.data.responseMessage;
+  })
 
-  useEffect(() => {
+  const connectSocket = (() => {
     const sock = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
-    sock.onopen = function () {
-      console.log('sock 연결됐다.');
+    setSockJs(sock);
 
-      mutate();
-      sock.onmessage = function () {
-        axios.get('/chat-history').then((response) => {
-          setChatData(response.data.responseMessage);
-        });
+    sock.onopen = async function () {
+      console.log('sock 연결됐다.');
+      const list = await getTodayChattingHistory();
+      setChatData(list);
+      sock.onmessage = function (message) {
+        const data = JSON.parse(message.data);
+        console.dir(data);
+        list.push(data)
+        setChatData(list);
       };
 
       sock.onclose = function () {
         console.log('없애줘..');
       };
     };
+    return sock;
+  })
 
-    axios.get('/chat-history').then((response) => {
-      setChatData(response.data.responseMessage);
-    });
+  /**
+   * * sock연결 및 receive
+   */
+
+  useEffect(() => {
+    if(!sockJs) {
+      connectSocket();
+    }
   }, []);
 
   useEffect(() => {
@@ -111,14 +129,20 @@ const HomePage = () => {
           <div className={styles.chatlog_stack}>
             {chatData ? (
               chatData.map((item, index) => (
-                <ChatLog
-                  key={index}
-                  userName={item.userName}
-                  chatFromMe={item.userId}
-                  chatMessage={item.message}
-                  chatDate={item.sendTime}
-                />
-              ))
+                  item.sendTime ? (
+                  <ChatLog
+                    key={index}
+                    userName={item.userName}
+                    chatFromMe={item.userId}
+                    chatMessage={item.message}
+                    chatDate={item.sendTime}/>
+                  ) : (
+                  <LoginMessage 
+                    key = {index}
+                    message={item.message}/>
+                  )
+                ) 
+              )
             ) : (
               <div>아직 데이터가 없어유 수정해보아유</div>
             )}
