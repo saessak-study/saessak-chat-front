@@ -1,74 +1,57 @@
 # Saessak-chat-front
+![채팅 메인 화면](https://user-images.githubusercontent.com/70371342/213625164-78c5cb29-c858-46a4-97a3-b4ad11af37fb.png)
 
-새싹 채팅 앱 프론트엔드 레포지토리
+## Description
+새싹 초보 개발 스터디! 프론트엔드 세명의 첫 협업 🤗
 
-# Getting Started with Create React App
+💬 React.js, Sass, Axios, SockJS, SWR 를 활용하여 회원가입, 로그인 및 양방향 통신을 통한 채팅앱을 구현 한 팀 프로젝트 입니다.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Contributors
+|이름|맡은 파트|github|
+|---|---|---|
+|심성보|sockJs, 웹소켓, UI/UX |[성보 github](https://github.com/Shim-sim)|
+|정길웅|메인 채팅 화면 구현  |[길웅 github](https://github.com/DoggySummer)|
+|신하영|API |[하영 github](https://github.com/Hayeong8957)|
 
-## Available Scripts
+## Features
+### [초기 SeassakChat 화면 구성 및 기획서](https://steep-agreement-07d.notion.site/SeassakChat-dc9c53d11dfd4118a36e4871baa41064)
 
-In the project directory, you can run:
+### 로그인 & 회원가입
 
-### `npm start`
+<p align="center">
+  <img width="280" alt="7" src="https://user-images.githubusercontent.com/90492088/213951213-663428eb-e6bb-4285-93cc-3adfff5df9b3.gif">
+  <img width="280" alt="7" src="https://user-images.githubusercontent.com/90492088/213951203-e6883acf-9ad1-496c-a45d-343576987460.gif">
+  &nbsp;&nbsp;&nbsp;
+</p>
+<br/>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 아이디 & 비밀번호 찾기
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<p align="center">
+  <img width="280" alt="7" src="https://user-images.githubusercontent.com/90492088/213951261-418f8873-aa82-49b3-abac-de6d36780222.gif">
+  <img width="280" alt="7" src="https://user-images.githubusercontent.com/90492088/213951286-9b8d9854-a4dd-427d-ada4-3a82e633cd1a.gif">
+  &nbsp;&nbsp;&nbsp;
+</p>
+<br/>
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 채팅 메인 화면
 
-### `npm run build`
+<p align="center">
+  <img width="500" alt="7" src="https://user-images.githubusercontent.com/90492088/213950861-a0c3987e-9954-4760-b5a6-b8c67ae623e3.gif">
+</p>
+<br/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
+**진행 과정** 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 백엔드 2명, 프론트 3명으로 구성된 팀 프로젝트로 [🔗 Notion,](https://www.notion.so/dc9c53d11dfd4118a36e4871baa41064) Slack 등의 Communication Tool 을 활용하여 협업했습니다.
+- Swagger API 문서를 기반으로 백엔드 분들과 함께 소통하며 작업했습니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**구현한 기능** 
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- XD를 이용한 UI/UX 설계 및 프로토타입 디자인
+- form validation 구현
+- 로그인, 회원가입, ID, PW찾기, 메인 채팅 화면 구현
+- 현재 접속한 유저의 실시간 접속상태 구현
+- SockJs를 활용한 실시간 채팅
