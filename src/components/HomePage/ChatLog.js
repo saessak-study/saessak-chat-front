@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../../style/css/homePage.module.css';
-import { convertTime } from '../../utils/convertDate';
 
 const ChatLog = ({ chatFromMe, userName, chatMessage, chatDate }) => {
   const userId = localStorage.getItem('id');
