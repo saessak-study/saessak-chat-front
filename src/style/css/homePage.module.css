@@ -123,6 +123,11 @@ body {
   margin: 10px auto;
 }
 
+.typed_chat_login_logoutMessage {
+  font-size:20px;
+  text-align: center;
+}
+
 .typed_chat_fromMe {
   background-color: #bad80a;
 }

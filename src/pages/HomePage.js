@@ -72,7 +72,7 @@ const HomePage = () => {
         const data = JSON.parse(message.data);
         console.dir(data);
         list.push(data)
-        setChatData(list);
+        setChatData(Object.assign([],list));
       };
 
       sock.onclose = function () {
