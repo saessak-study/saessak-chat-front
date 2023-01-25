@@ -11,7 +11,7 @@
 |---|---|---|
 |심성보|sockJs, 웹소켓, UI/UX |[성보 github](https://github.com/Shim-sim)|
 |정길웅|메인 채팅 화면 구현  |[길웅 github](https://github.com/DoggySummer)|
-|신하영|API |[하영 github](https://github.com/Hayeong8957)|
+|신하영|API, 화면구성도 및 기획서 작성(UI/UX) |[하영 github](https://github.com/Hayeong8957)|
 
 ## Features
 ### [초기 SeassakChat 화면 구성 및 기획서](https://steep-agreement-07d.notion.site/SeassakChat-dc9c53d11dfd4118a36e4871baa41064)

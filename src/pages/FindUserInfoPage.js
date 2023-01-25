@@ -21,12 +21,9 @@ const FindUserInfoPage = () => {
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
 
-  /** api요청으로 받아올 데이터 */
+  const [returnId, setReturnId] = useState('');
+  const [returnPw, setReturnPw] = useState('');
 
-  const [returnId, setReturnId] = useState('shy8957');
-  const [returnPw, setReturnPw] = useState('qwer1234!');
-
-  /** 현재 어떤걸 찾는 모달창인지 알아야 함 */
   const modalForId = 'id';
   const modalForPw = 'password';
 
@@ -46,11 +43,6 @@ const FindUserInfoPage = () => {
     });
   };
 
-  /** 아이디 찾기 api */
-  /** API
-   * package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
-   * 서버 url : http://35.216.19.135:8080/find-id
-   */
   const getFindId = async () => {
     let body = {
       email: checkEmail,
@@ -71,9 +63,6 @@ const FindUserInfoPage = () => {
       });
   };
 
-  /** 비밀번호 찾기 api
-   * 서버 url : http://35.216.19.135:8080/find-password
-   */
   const getFindPw = async () => {
     let body = {
       email: checkEmail,

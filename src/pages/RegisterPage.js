@@ -24,9 +24,6 @@ const RegisterPage = () => {
   const { userId, userPw, userPwChk, userEmail, userName } = inputs;
   const navigate = useNavigate();
 
-  /**
-   * *메세지상태를 저장한 state
-   *  */
   const [idMSG, setIdMSG] = useState(true);
   const [pwMSG, setPwMSG] = useState(true);
   const [pwValidMSG, setPwValidMSG] = useState(true);
