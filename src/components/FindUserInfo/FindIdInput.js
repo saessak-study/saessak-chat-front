@@ -6,9 +6,7 @@ import {
   EMAIL_EMPTY,
   EMAIL_INVALID,
 } from '../../constants/message';
-/**
- * TODO: Modal 수정 및 보완 필요(데이터 바인딩)
- */
+
 const FindIdInput = ({
   modal,
   onFindIdHandler,
