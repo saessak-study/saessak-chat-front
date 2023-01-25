@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ChatLog from '../components/HomePage/ChatLog';
 import ChkUserOnline from '../components/HomePage/ChkUserOnline';
@@ -7,71 +7,46 @@ import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import axios from 'axios';
 import * as SockJS from 'sockjs-client';
+import InputTest from '../components/HomePage/InputTest';
 
 const HomePage = () => {
   const userId = localStorage.getItem('id');
   const navigate = useNavigate();
-  /**
-   * * 주기적을 요청보내는 코드
-   */
+
   const { data: userData, mutate } = useSWR(
     'http://35.216.19.135:8080/online-user',
     fetcher,
     {
-      refreshInterval: 2000,
+      refreshInterval: 5000,
     },
   );
-  const [chatInput, setChatInput] = useState('');
+
   const [chatData, setChatData] = useState([]);
+  const [sockJs, setSockJs] = useState('');
 
   const logOutAction = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
+      sockJs.send(`${userId}님이 퇴장하셨습니다. Good Bye!`);
       localStorage.clear();
       console.log('로그아웃입니당');
       navigate('/');
     } else return;
   };
 
-  const onSubmitMessage = useCallback(() => {
-    const sockJs = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
-    sockJs.onopen = function () {
-      sockJs.send(chatInput);
-      console.log('보내짐');
-      axios.get('/chat-history').then((response) => {
-        setChatData(response.data.responseMessage);
-      });
-    };
-    setChatInput('');
-  }, [chatInput, userId]);
-
-  const onChange = (e) => {
-    setChatInput(e.target.value);
-  };
-
-  /**
-   * * sock연결 및 receive
-   */
-
   useEffect(() => {
     const sock = new SockJS(`http://35.216.19.135:8080/chat/${userId}`);
-    sock.onopen = function () {
-      console.log('sock 연결됐다.');
 
+    sock.onopen = function () {
+      sock.send(`${userId}님이 입장하셨습니다. Hello!`);
+      setSockJs(sock);
       mutate();
-      sock.onmessage = function () {
+
+      sock.onmessage = function (e) {
         axios.get('/chat-history').then((response) => {
           setChatData(response.data.responseMessage);
         });
       };
-
-      sock.onclose = function () {
-        console.log('없애줘..');
-      };
     };
-
-    axios.get('/chat-history').then((response) => {
-      setChatData(response.data.responseMessage);
-    });
   }, []);
 
   useEffect(() => {
@@ -124,20 +99,7 @@ const HomePage = () => {
             )}
           </div>
         </div>
-        <div className={styles.chatInput_container}>
-          <input
-            className={styles.chatInput}
-            onChange={onChange}
-            value={chatInput}
-            type="text"
-          ></input>
-          <div
-            className={styles.chatInput_send}
-            onClick={() => onSubmitMessage()}
-          >
-            전송
-          </div>
-        </div>
+        <InputTest sockJs={sockJs} setChatData={setChatData} />
       </div>
     </div>
   );
