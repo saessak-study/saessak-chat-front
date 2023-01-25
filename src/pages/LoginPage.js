@@ -1,9 +1,8 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styles from '../style/css/loginPage.module.css';
-import { ID_EMPTY, PW_EMPTY } from '../constants/message';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { ID_EMPTY, PW_EMPTY } from '../constants/message';
 import { regPassword, regId } from '../constants/regEx';
 
 const LoginPage = () => {
@@ -17,7 +16,6 @@ const LoginPage = () => {
   const [isAlert, setIsAlert] = useState(false);
   const navigate = useNavigate();
 
-  /** input 관리 */
   const onChangeInputs = (e) => {
     const { value, name } = e.target;
     setInputs({
@@ -33,7 +31,6 @@ const LoginPage = () => {
     if (!regPassword.test(userPw) || !userPw) setpwValid(false);
   }, [userId, userPw]);
 
-  /** login버튼 누를 시 유효성 검사 */
   const loginBtnAction = (e) => {
     e.preventDefault();
     if (!idValid) {
@@ -46,21 +43,6 @@ const LoginPage = () => {
     }
   };
 
-  /** localStorage 확인용 코드 -> 지울것  */
-  const gotohome = () => {
-    navigate('/mainchat', {
-      state: {
-        before: '/',
-        id: userId,
-      },
-    });
-    localStorage.setItem('id', userId);
-  };
-
-  /** API -> form태그 onsubmit에 적용
-   * package.json파일에 proxy로 로컬 서버 입력해놓았기에 나머지 부분만 작성한 것
-   * 서버 url : http://35.216.19.135:8080/login
-   */
   const handleSubmit = (e) => {
     let body = {
       id: userId,
@@ -77,20 +59,18 @@ const LoginPage = () => {
         })
         .then((response) => {
           alert(response.data.responseMessage);
-          /** 브라우저에 id 저장 */
-          localStorage.clear();
+
           localStorage.setItem('id', userId);
           navigate('/mainchat');
         })
         .catch((error) => {
-          // 에러 핸들링
           console.log(error);
           console.log('Error: ', error.message);
           alert(error.response.data.responseMessage);
         });
     }
   };
-  /** user로그인 상태에 따른 분기처리 */
+
   useEffect(() => {
     let userInfo = localStorage.getItem('id');
     if (userInfo) {
