@@ -1,23 +1,25 @@
 import React, { useState, useCallback } from 'react';
 import styles from '../../style/css/homePage.module.css';
-import axios from 'axios';
 
-const InputBox = ({ sockJs, setChatData }) => {
+const InputBox = ({ sockJs, connectSocket, setSockJs }) => {
   const [chatInput, setChatInput] = useState('');
 
   const onSubmitMessage = useCallback(() => {
-    sockJs.send(chatInput);
-    sockJs.onmessage = function (e) {
-      axios.get('/chat-history').then((response) => {
-        setChatData(response.data.responseMessage);
-      });
-    };
+    if (sockJs) {
+      sockJs.send(chatInput);
+      console.log(chatInput);
+      console.log('보냄');
+    } else {
+      const newSocket = connectSocket();
+      newSocket.send(newSocket);
+      setSockJs(newSocket);
+    }
     setChatInput('');
-  }, [chatInput, sockJs, setChatData]);
+  }, [chatInput, sockJs, setSockJs, connectSocket]);
 
-  const onChange = useCallback((e) => {
+  const onChange = (e) => {
     setChatInput(e.target.value);
-  }, []);
+  };
 
   return (
     <div className={styles.chatInput_container}>

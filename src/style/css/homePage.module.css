@@ -47,6 +47,7 @@ body {
   height: 430px;
   overflow-y: auto;
 }
+
 .user_status_container .user_status {
   padding: 5px;
   display: flex;
@@ -67,7 +68,9 @@ body {
   display: flex;
 }
 
-.user_circle, .user_OfflineCircle, .user_OnlineCircle {
+.user_circle,
+.user_OfflineCircle,
+.user_OnlineCircle {
   display: flex;
   width: 14px;
   height: 14px;
@@ -112,15 +115,25 @@ body {
   padding-bottom: 20px;
   overflow-y: scroll;
 }
+
 .chatlog_empty {
   font-size: 20px;
 }
 
-.typed_chatlog, .typed_chat_fromPeople, .typed_chat_fromMe {
+.typed_chatlog,
+.typed_chat_fromPeople,
+.typed_chat_fromMe {
   width: 95%;
   border-radius: 20px;
   padding: 10px 0 10px 20px;
   margin: 10px auto;
+}
+
+.typed_chat_login_logoutMessage {
+  font-size: 20px;
+  text-align: center;
+  background: wheat;
+  margin-bottom: 5px;
 }
 
 .typed_chat_fromMe {
@@ -136,9 +149,11 @@ body {
   align-items: baseline;
   padding-bottom: 10px;
 }
+
 .typed_chat_info .typed_chat_name {
   font-weight: bold;
 }
+
 .typed_chat_info .typed_chat_time {
   color: grey;
   font-size: 8px;
@@ -151,6 +166,7 @@ body {
   display: flex;
   align-items: center;
 }
+
 .chatInput_container .chatInput {
   border-radius: 15px;
   border-color: white;
@@ -160,9 +176,11 @@ body {
   padding-left: 20px;
   font-size: 20px;
 }
+
 .chatInput_container .chatInput:focus {
   outline: none;
 }
+
 .chatInput_container .chatInput_send {
   display: flex;
   background-color: #bad80a;

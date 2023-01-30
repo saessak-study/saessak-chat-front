@@ -1,22 +1,22 @@
-$main_green: #bad80a;
-$darkGreen: #649600;
-$background_grey: #eeeeef;
 body {
   margin: 0;
   padding: 0;
 }
+
 .mainPage {
   display: flex;
   width: 100vw;
 }
+
 .left_container {
   width: 30%;
-  background-color: $darkGreen;
+  background-color: #649600;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
 }
+
 .main_logo {
   color: white;
   font-weight: bolder;
@@ -28,14 +28,17 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 .user_container {
   padding: 20px 0;
 }
+
 .user_online {
   color: white;
   font-size: 30px;
   padding-bottom: 20px;
 }
+
 .user_status_container {
   border-radius: 15px;
   background-color: white;
@@ -43,24 +46,30 @@ body {
   font-weight: bolder;
   height: 430px;
   overflow-y: auto;
-  .user_status {
-    padding: 5px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
 }
+.user_status_container .user_status {
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .user_status_container::-webkit-scrollbar {
   width: 20px;
 }
+
 .user_status_container::-webkit-scrollbar-thumb {
-  background: $main_green;
+  background: #bad80a;
   border-radius: 15px;
 }
+
 .user_name {
   display: flex;
 }
-.user_circle {
+
+.user_circle,
+.user_OfflineCircle,
+.user_OnlineCircle {
   display: flex;
   width: 14px;
   height: 14px;
@@ -68,16 +77,17 @@ body {
   margin-right: 15px;
   left: 50px;
 }
+
 .user_OnlineCircle {
-  @extend .user_circle;
   background-color: #22ff00;
   margin-left: 1.5rem;
 }
+
 .user_OfflineCircle {
-  @extend .user_circle;
   background-color: #9ea29e;
   margin-left: 1.5rem;
 }
+
 .user_logout {
   color: white;
   padding: 30px 20px;
@@ -88,82 +98,91 @@ body {
   font-size: 20px;
   cursor: pointer;
 }
+
 .right_container {
   width: 80%;
-  background-color: $background_grey;
+  background-color: #eeeeef;
   display: flex;
   flex-direction: column;
 }
+
 .chatlog_container {
-  background-color: $background_grey;
+  background-color: #eeeeef;
   height: 80vh;
   display: flex;
   flex-direction: column-reverse;
   padding-bottom: 20px;
   overflow-y: scroll;
-  .chatlog_stack {
-  }
 }
 .chatlog_empty {
   font-size: 20px;
 }
 
-.typed_chatlog {
+.typed_chatlog,
+.typed_chat_fromPeople,
+.typed_chat_fromMe {
   width: 95%;
   border-radius: 20px;
   padding: 10px 0 10px 20px;
   margin: 10px auto;
 }
-.typed_chat_fromMe {
-  background-color: $main_green;
-  @extend .typed_chatlog;
+
+.typed_chat_login_logoutMessage {
+  font-size: 20px;
+  text-align: center;
+  background: wheat;
+  margin-bottom: 5px;
 }
+
+.typed_chat_fromMe {
+  background-color: #bad80a;
+}
+
 .typed_chat_fromPeople {
   background-color: #fff;
-  @extend .typed_chatlog;
 }
 
 .typed_chat_info {
   display: flex;
   align-items: baseline;
   padding-bottom: 10px;
-  .typed_chat_name {
-    font-weight: bold;
-  }
-  .typed_chat_time {
-    color: grey;
-    font-size: 8px;
-    margin-left: 10px;
-  }
+}
+.typed_chat_info .typed_chat_name {
+  font-weight: bold;
+}
+.typed_chat_info .typed_chat_time {
+  color: grey;
+  font-size: 8px;
+  margin-left: 10px;
 }
 
 .chatInput_container {
-  background-color: $darkGreen;
+  background-color: #649600;
   height: 20%;
   display: flex;
   align-items: center;
-  .chatInput {
-    border-radius: 15px;
-    border-color: white;
-    width: 85%;
-    height: 40%;
-    margin: 0 10px;
-    padding-left: 20px;
-    font-size: 20px;
-  }
-  .chatInput:focus {
-    outline: none;
-  }
-  .chatInput_send {
-    display: flex;
-    background-color: $main_green;
-    align-items: center;
-    font-weight: bold;
-    font-size: 30px;
-    height: 40%;
-    margin-right: 40px;
-    padding: 0 10px;
-    border-radius: 20px;
-    cursor: pointer;
-  }
+}
+.chatInput_container .chatInput {
+  border-radius: 15px;
+  border-color: white;
+  width: 85%;
+  height: 40%;
+  margin: 0 10px;
+  padding-left: 20px;
+  font-size: 20px;
+}
+.chatInput_container .chatInput:focus {
+  outline: none;
+}
+.chatInput_container .chatInput_send {
+  display: flex;
+  background-color: #bad80a;
+  align-items: center;
+  font-weight: bold;
+  font-size: 30px;
+  height: 40%;
+  margin-right: 40px;
+  padding: 0 10px;
+  border-radius: 20px;
+  cursor: pointer;
 }
